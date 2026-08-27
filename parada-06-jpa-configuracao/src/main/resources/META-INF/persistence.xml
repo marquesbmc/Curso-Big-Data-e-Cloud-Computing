@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+    <!--
+        A unidade de persistencia agrupa entidades, provedor e configuracoes.
+        O mesmo nome "livraria" sera usado por Persistence.createEntityManagerFactory.
+    -->
+    <persistence-unit name="livraria" transaction-type="RESOURCE_LOCAL">
+        <!-- JPA e a especificacao; Hibernate e a implementacao escolhida. -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Em Java SE declaramos explicitamente cada classe gerenciada. -->
+        <class>br.edu.ibmec.livraria.Livro</class>
+
+        <properties>
+            <!-- Propriedades JDBC usadas internamente pelo Hibernate. -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlite:livraria.db"/>
+
+            <!-- O dialeto traduz as operacoes do Hibernate para o SQL do SQLite. -->
+            <property name="hibernate.dialect" value="org.hibernate.community.dialect.SQLiteDialect"/>
+
+            <!-- O esquema ja existe e nunca deve ser criado ou alterado pelo Hibernate. -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+
+            <!-- Exibir o SQL ajuda a comparar JPA com as paradas anteriores de JDBC. -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>

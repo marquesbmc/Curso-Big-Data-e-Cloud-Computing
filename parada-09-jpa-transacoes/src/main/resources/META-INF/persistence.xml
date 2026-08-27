@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+    <!-- RESOURCE_LOCAL deixa begin, commit e rollback sob controle da aplicacao. -->
+    <persistence-unit name="livraria" transaction-type="RESOURCE_LOCAL">
+        <!-- Hibernate e o provedor que implementa as interfaces da API JPA. -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Todo o grafo usado na venda deve ser conhecido pela unidade. -->
+        <class>br.edu.ibmec.livraria.Autor</class>
+        <class>br.edu.ibmec.livraria.Livro</class>
+        <class>br.edu.ibmec.livraria.Venda</class>
+        <class>br.edu.ibmec.livraria.ItemVenda</class>
+
+        <!-- Conversores tambem sao componentes gerenciados pelo provedor. -->
+        <class>br.edu.ibmec.livraria.LocalDateTimeStringConverter</class>
+        <properties>
+            <!-- Hibernate usa este driver JDBC para acessar o arquivo SQLite. -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlite:livraria.db"/>
+
+            <!-- O dialeto adapta identidade, tipos e SQL as capacidades do SQLite. -->
+            <property name="hibernate.dialect" value="org.hibernate.community.dialect.SQLiteDialect"/>
+
+            <!-- O banco e fornecido pronto; nenhuma tabela deve ser gerada. -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+
+            <!-- SQLite exige habilitar chaves estrangeiras em cada conexao aberta. -->
+            <property name="hibernate.connection.init_sql" value="PRAGMA foreign_keys = ON"/>
+
+            <!-- O SQL visivel permite acompanhar flush, commit e rollback na aula. -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>

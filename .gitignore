@@ -1,0 +1,15 @@
+# Java/Maven build output
+**/target/
+*.class
+
+# Local JDK bundle (large; install Java 17 locally instead)
+.tools/jdk-*/
+OpenJDK*-jdk_*.zip
+
+# IDE and operating-system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+

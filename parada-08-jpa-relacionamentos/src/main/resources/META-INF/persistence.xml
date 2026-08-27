@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+    <!-- A aplicacao Java SE controla localmente suas transacoes e recursos. -->
+    <persistence-unit name="livraria" transaction-type="RESOURCE_LOCAL">
+        <!-- Hibernate transforma o modelo de entidades em operacoes JDBC. -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Os dois lados do relacionamento precisam ser entidades gerenciadas. -->
+        <class>br.edu.ibmec.livraria.Autor</class>
+        <class>br.edu.ibmec.livraria.Livro</class>
+        <properties>
+            <!-- A URL e substituida pelo caminho absoluto calculado em JPAUtil. -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:sqlite:livraria.db"/>
+
+            <!-- O dialeto conhece as particularidades SQL e de identidade do SQLite. -->
+            <property name="hibernate.dialect" value="org.hibernate.community.dialect.SQLiteDialect"/>
+
+            <!-- O mapeamento usa as tabelas existentes sem gerar DDL. -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+
+            <!-- Manter o SQL visivel permite observar quando o lazy e inicializado. -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
