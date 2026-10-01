@@ -1,1 +1,0 @@
-"""Capturadores EL, organizados por tipo de fonte."""
