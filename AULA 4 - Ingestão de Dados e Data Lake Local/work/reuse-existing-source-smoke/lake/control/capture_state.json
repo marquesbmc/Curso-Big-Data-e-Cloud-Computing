@@ -1,0 +1,55 @@
+{
+  "database_watermarks": {
+    "customers": 1000,
+    "suppliers": 30,
+    "products": 500,
+    "orders": 10000,
+    "order_items": 29891,
+    "payments": 10000
+  },
+  "file_manifest": {
+    "2026-08-31/inventory.csv": "1a61f9c3fa3a0db36c6b0f35f743049cbb606f41d1926129aa0df17dbf8e35e3",
+    "2026-09-07/inventory.csv": "693d15b9fd1e34c60eb861ec228d007ce9019f2affa498430ee7ff10dc42d686",
+    "2026-09-14/inventory.csv": "0b406b51a832f6c467b97b74bf2e17475512c7c21463b7dbbfc4fc27f80021f5",
+    "2026-09-21/inventory.csv": "a5eab085bdf5c4ebdccb889991e61c8f478965f2d2d50ba4e92a85d3cfdcc6a9",
+    "2026-09-28/inventory.csv": "79894e3b1419a51f00747ae47f27fd7d5d4b13ca98b1450a13690b1b75add47c",
+    "campaigns.json": "36559e945227da7f497c493148a4640b95dad5e95766937aec3837a795e6b347",
+    "catalog.csv": "abd83c612d0917e830e0858a4cf0f9e0720556f948b2c28b2c2c1b03bc03a916"
+  },
+  "event_manifest": {
+    "events_2026-09-01.jsonl": "0ac914913c7310a3a9321ab7a4d1963e81ac783daf2f4af409b33aad26b165b9",
+    "events_2026-09-02.jsonl": "6bf7b4bd84dc67dfa0f9cdb74385484d399d24c8ed89ecdb7e850f75ed825b8f",
+    "events_2026-09-03.jsonl": "c794d432a5947d41fb06d1dc07005332b9f78b21adb807e0f9dfe81dfb156ad3",
+    "events_2026-09-04.jsonl": "13d0cfc4b5a259ba9ef3ecf4109b8daf8646fb8b11b5d0464d89d2da912f5c67",
+    "events_2026-09-05.jsonl": "daff3da5e7b16a6b0c149cc826e54212f7d0311ee1e0f254c1bb2312467e5092",
+    "events_2026-09-06.jsonl": "a0ed45b7455d6f4e0483d7bda696d12cdf5da46a88ece156fadb6be5619e17e2",
+    "events_2026-09-07.jsonl": "f7ca22aebcdf130e5789bf45ea42273b8f5b16748188d3e2f152fbaedb03cd13",
+    "events_2026-09-08.jsonl": "93c7aaeba17b3c65b3ad3809d6de016e221af5ab7d33e61c3280e4d3ad88c773",
+    "events_2026-09-09.jsonl": "9841289c4119b742a7305d93b13eda7702cd3832d6046f8fde155785896b4525",
+    "events_2026-09-10.jsonl": "d0f1e9e3e9f52200e9439ce4794af04e368a470b7bbef3dadea2ec7d1c757e44",
+    "events_2026-09-11.jsonl": "bc6d9a8fc4505e676016b3d6ab46bda9ca25d25fa7c30790670bb88ca78ac168",
+    "events_2026-09-12.jsonl": "1f73f9fecf649844b54321bb760366d46dfa41f10679a323e7e6b48f354b7c28",
+    "events_2026-09-13.jsonl": "80521f70e0076dcb23d11bba05ed2c754a831b62ae1201fef2ed56a4ec3d39ba",
+    "events_2026-09-14.jsonl": "37218fa088d59dfcc1508cd0f501a26e1c3986657645df1baad77d7fca7766c3",
+    "events_2026-09-15.jsonl": "deeba7c524aaf2318016feea62573a9c28a700beda23de58c4ed0c7c9bad8071",
+    "events_2026-09-16.jsonl": "47d64128de67aa8a40b225af013de10c1acdc58553d8241f7062dfef180f7b28",
+    "events_2026-09-17.jsonl": "21d9354cc0ee06e1dabc27b10b714eef188b58edbaa74f19f3515efc7ff3530b",
+    "events_2026-09-18.jsonl": "b6210792afb6b058982f471c4e65c557b8a5a13da9e47d5375b339af831a730d",
+    "events_2026-09-19.jsonl": "c7cf088dadf577331b4107148e38d05d1d2bdabe002fefcc86b60b6a1b36cae0",
+    "events_2026-09-20.jsonl": "4a52507f013464b398a43b646e9ec596d9ae11c33526b04b11bb2734a2c7eae4",
+    "events_2026-09-21.jsonl": "a454126fdf8d7f3822f18ab74ab74f24ac5fc6734dbe7310bd34c779eae7b080",
+    "events_2026-09-22.jsonl": "140c7d0bc55f940f66dc3e7e0bf98c063502ae0646cab04f242110a1e6bf58ae",
+    "events_2026-09-23.jsonl": "db08bb2838e0515ff79a11a85a7d4aa853e9e00f6d2b1034416b8acff1da00c5",
+    "events_2026-09-24.jsonl": "bdc81d4705da68c87ae67dfd81a2225f2786f64c40d887f230546eb2e94feb6b",
+    "events_2026-09-25.jsonl": "5d5ef3b860ab0d8b983064c152121ee92342edcbd67d750378c96490f79bb34c",
+    "events_2026-09-26.jsonl": "502fc009894815e3bf242bf5cbddf246f936f8345cee76278df39904b621705f",
+    "events_2026-09-27.jsonl": "d4f5c95b06574db5419c9c483f6119b7989a445ba50523a06384a6f6ef310c9d",
+    "events_2026-09-28.jsonl": "9c8bef69e999e84fe7ad93c66bfa590849f2813d1952e573f3560b1c62788a68",
+    "events_2026-09-29.jsonl": "c055227a352cd7038d5f60015a4c289ac500ba13ccc3551d199fd1a8f68d59a9",
+    "events_2026-09-30.jsonl": "0b6edcd61a042aeba878d19a43f19424c366451e63ea2a61aa261471737f98c8"
+  },
+  "api": {
+    "last_sequence": 10000
+  },
+  "last_run": "2026-09-30T20:16:28.082464+00:00"
+}

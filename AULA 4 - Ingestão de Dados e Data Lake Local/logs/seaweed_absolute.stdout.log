@@ -1,0 +1,40 @@
+
+  Starting SeaweedFS Mini ...
+  Master       starting
+  Master       ready     0.2s
+  Volume       starting
+  Volume       ready     0.2s
+  Filer        starting
+  Filer        ready     0.2s
+  S3           starting
+  WebDAV       starting
+  S3           ready     0.2s
+  Iceberg      starting
+  Iceberg      ready     0.0s
+  Lance        starting
+  Lance        ready     0.0s
+  WebDAV       ready     0.2s
+  Admin        starting
+  Admin        ready     0.5s
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                      SeaweedFS Mini - All-in-One Mode                         ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+  All enabled components are running and ready to use:
+
+    Master UI:       http://192.168.1.252:9333
+    Volume Server:   http://192.168.1.252:9340
+    Filer UI:        http://192.168.1.252:8888
+    WebDAV:          http://192.168.1.252:7333
+    S3 Endpoint:     http://192.168.1.252:8333
+    Iceberg Catalog: http://192.168.1.252:8181
+    Lance Namespace: http://192.168.1.252:9101
+    Admin UI:        http://192.168.1.252:23646
+
+  Data Directory:   D:\dev\BIGDATA\seaweed-data-working-copy
+  Free Space:       131.57 GiB
+  Volume Size:      1.00 GiB
+  Volume Count:     131
+  Free Volumes:     130
+
+  Press Ctrl+C to stop all components

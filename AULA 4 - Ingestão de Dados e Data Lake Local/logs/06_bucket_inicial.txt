@@ -1,0 +1,23 @@
+{
+  "bucket": "curso-bigdata",
+  "objects": 44,
+  "bytes": 34581470,
+  "prefixes": {
+    "landing/api": {
+      "objects": 1,
+      "bytes": 2628718
+    },
+    "landing/database": {
+      "objects": 6,
+      "bytes": 8401148
+    },
+    "landing/events": {
+      "objects": 30,
+      "bytes": 23459114
+    },
+    "landing/files": {
+      "objects": 7,
+      "bytes": 92490
+    }
+  }
+}

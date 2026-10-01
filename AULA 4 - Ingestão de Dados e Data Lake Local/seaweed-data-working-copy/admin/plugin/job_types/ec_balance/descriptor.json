@@ -1,0 +1,241 @@
+{
+  "jobType":  "ec_balance",
+  "displayName":  "EC Shard Balance",
+  "description":  "Detect and execute EC shard rebalancing across the cluster",
+  "icon":  "fas fa-balance-scale-left",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "ec-balance-admin",
+    "title":  "EC Shard Balance Admin Config",
+    "description":  "Admin-side controls for EC shard balance detection scope.",
+    "sections":  [
+      {
+        "sectionId":  "scope",
+        "title":  "Scope",
+        "description":  "Optional filters applied before EC shard balance detection.",
+        "fields":  [
+          {
+            "name":  "collection_filter",
+            "label":  "Collection Filter",
+            "description":  "Only balance EC shards in matching collections. Comma-separated list of names, wildcards, or regex patterns.",
+            "helpText":  "",
+            "placeholder":  "all collections",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "data_center_filter",
+            "label":  "Data Center Filter",
+            "description":  "Only balance within matching data centers (wildcard supported).",
+            "helpText":  "",
+            "placeholder":  "all data centers",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "disk_type",
+            "label":  "Disk Type",
+            "description":  "Only balance EC shards on this disk type (hdd, ssd, or empty for all).",
+            "helpText":  "",
+            "placeholder":  "all disk types",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "shard_replica_placement",
+            "label":  "Shard Replica Placement",
+            "description":  "EC shard replica placement constraint (e.g. 020); empty uses the master default replication (even spread only when that default is empty or zero). Mirrors the ec.balance -shardReplicaPlacement flag.",
+            "helpText":  "",
+            "placeholder":  "master default",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "collection_filter":  {
+        "stringValue":  ""
+      },
+      "data_center_filter":  {
+        "stringValue":  ""
+      },
+      "disk_type":  {
+        "stringValue":  ""
+      },
+      "shard_replica_placement":  {
+        "stringValue":  ""
+      }
+    }
+  },
+  "workerConfigForm":  {
+    "formId":  "ec-balance-worker",
+    "title":  "EC Shard Balance Worker Config",
+    "description":  "Worker-side detection thresholds and execution controls.",
+    "sections":  [
+      {
+        "sectionId":  "thresholds",
+        "title":  "Detection Thresholds",
+        "description":  "Controls for when EC shard balance jobs should be proposed.",
+        "fields":  [
+          {
+            "name":  "imbalance_threshold",
+            "label":  "Imbalance Threshold",
+            "description":  "Minimum shard count imbalance ratio to trigger balancing (0.0-1.0).",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_DOUBLE",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "doubleValue":  0.05
+            },
+            "maxValue":  {
+              "doubleValue":  0.5
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "min_server_count",
+            "label":  "Minimum Server Count",
+            "description":  "Minimum servers required for EC shard balancing.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "2"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "io_byte_per_second",
+            "label":  "Shard Copy IO Limit (bytes/sec)",
+            "description":  "Limit each EC shard copy's rate in bytes per second. 0 falls back to each volume server's own maintenance rate.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "preferred_tags",
+            "label":  "Preferred Tags",
+            "description":  "Comma-separated disk tags to prioritize for shard placement, ordered by preference.",
+            "helpText":  "",
+            "placeholder":  "fast,ssd",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "imbalance_threshold":  {
+        "doubleValue":  0.2
+      },
+      "io_byte_per_second":  {
+        "int64Value":  "0"
+      },
+      "min_server_count":  {
+        "int64Value":  "3"
+      },
+      "preferred_tags":  {
+        "stringValue":  ""
+      }
+    }
+  },
+  "adminRuntimeDefaults":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  30,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  500,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  30,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "workerDefaultValues":  {
+    "imbalance_threshold":  {
+      "doubleValue":  0.2
+    },
+    "io_byte_per_second":  {
+      "int64Value":  "0"
+    },
+    "min_server_count":  {
+      "int64Value":  "3"
+    },
+    "preferred_tags":  {
+      "stringValue":  ""
+    }
+  }
+}

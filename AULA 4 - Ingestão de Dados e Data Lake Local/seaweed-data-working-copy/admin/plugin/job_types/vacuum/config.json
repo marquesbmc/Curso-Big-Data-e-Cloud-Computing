@@ -1,0 +1,40 @@
+{
+  "jobType":  "vacuum",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "collection_filter":  {
+      "stringValue":  ""
+    },
+    "data_center_filter":  {
+      "stringValue":  ""
+    },
+    "node_filter":  {
+      "stringValue":  ""
+    },
+    "rack_filter":  {
+      "stringValue":  ""
+    },
+    "volume_state":  {
+      "stringValue":  "ALL"
+    }
+  },
+  "workerConfigValues":  {
+    "garbage_threshold":  {
+      "doubleValue":  0.3
+    }
+  },
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  17,
+    "detectionTimeoutSeconds":  120,
+    "maxJobsPerDetection":  200,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  10,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "updatedAt":  "2026-09-30T21:23:26.563114500Z",
+  "updatedBy":  "plugin"
+}

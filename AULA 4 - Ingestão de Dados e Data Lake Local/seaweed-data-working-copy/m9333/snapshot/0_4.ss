@@ -1,0 +1,2 @@
+de888571
+{"lastIndex":4,"lastTerm":0,"peers":[{"name":"192.168.1.252:9333.19333","connectionString":"192.168.1.252:19333"}],"state":"eyJtYXhWb2x1bWVJZCI6MCwidG9wb2xvZ3lJZCI6IjZiMTEzZjY4LTc3YzEtNDA1ZC04NGE4LWQ3ZDU0ZTU3OWYyNiJ9","path":"..\\seaweed-data-working-copy/m9333/snapshot/0_4.ss"}

@@ -1,0 +1,20 @@
+{
+  "job_id": "s3_lifecycle-scheduled-1790808026734570200-0",
+  "job_type": "s3_lifecycle",
+  "request_id": "exec-1790808026737832900-8564a64ac18f57eb",
+  "worker_id": "w-DESKTO-4026",
+  "parameters": {
+    "filer_grpc_address": {
+      "string_value": "192.168.1.252:18888"
+    }
+  },
+  "state": "job_state_succeeded",
+  "progress": 100,
+  "stage": "completed",
+  "message": "s3 lifecycle daily replay completed",
+  "attempt": 1,
+  "created_at": "2026-09-30T22:40:26.7345702Z",
+  "updated_at": "2026-09-30T22:40:26.7383987Z",
+  "completed_at": "2026-09-30T22:40:26.7647699Z",
+  "result_summary": "s3 lifecycle daily replay completed"
+}

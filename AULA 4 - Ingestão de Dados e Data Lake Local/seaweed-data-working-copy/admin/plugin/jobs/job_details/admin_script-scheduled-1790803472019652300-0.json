@@ -1,0 +1,59 @@
+{
+  "job_id": "admin_script-scheduled-1790803472019652300-0",
+  "job_type": "admin_script",
+  "request_id": "exec-1790803474020450700-c4c5d0cc162d0933",
+  "worker_id": "w-DESKTO-4026",
+  "dedupe_key": "admin-script:f278f214d147b7b842be6228de3f0e83e1c8867432aa2b2c4856ca768e3b4e3c",
+  "summary": "Run admin script",
+  "detail": "Admin script with 4 command(s)",
+  "parameters": {
+    "command_count": {
+      "int64_value": "4"
+    },
+    "script": {
+      "string_value": "fs.log.purge -daysAgo=7\nvolume.deleteEmpty -quietFor=24h -apply\nvolume.fix.replication -apply\ns3.clean.uploads -timeAgo=24h"
+    },
+    "script_hash": {
+      "string_value": "f278f214d147b7b842be6228de3f0e83e1c8867432aa2b2c4856ca768e3b4e3c"
+    },
+    "script_name": {
+      "string_value": ""
+    }
+  },
+  "labels": {
+    "script_hash": "f278f214d147b7b842be6228de3f0e83e1c8867432aa2b2c4856ca768e3b4e3c"
+  },
+  "state": "job_state_succeeded",
+  "progress": 100,
+  "stage": "completed",
+  "message": "admin script executed (4 command(s))",
+  "attempt": 1,
+  "created_at": "2026-09-30T21:24:32.0196523Z",
+  "updated_at": "2026-09-30T21:24:34.0204507Z",
+  "completed_at": "2026-09-30T21:24:49.0954761Z",
+  "result_summary": "admin script executed (4 command(s))",
+  "result_output_values": {
+    "command_count": {
+      "int64_value": "4"
+    },
+    "commands": {
+      "string_list": {
+        "values": [
+          "fs.log.purge -daysAgo=7",
+          "volume.deleteEmpty -quietFor=24h -apply",
+          "volume.fix.replication -apply",
+          "s3.clean.uploads -timeAgo=24h"
+        ]
+      }
+    },
+    "error_count": {
+      "int64_value": "0"
+    },
+    "output": {
+      "string_value": "$ fs.log.purge -daysAgo=7\n$ volume.deleteEmpty -quietFor=24h -apply\n$ volume.fix.replication -apply\n$ s3.clean.uploads -timeAgo=24h"
+    },
+    "script_hash": {
+      "string_value": "f278f214d147b7b842be6228de3f0e83e1c8867432aa2b2c4856ca768e3b4e3c"
+    }
+  }
+}

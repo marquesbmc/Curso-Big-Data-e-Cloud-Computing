@@ -1,0 +1,320 @@
+{
+  "jobType":  "volume_balance",
+  "displayName":  "Volume Balance",
+  "description":  "Detect and execute volume moves to balance server load",
+  "icon":  "fas fa-balance-scale",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "volume-balance-admin",
+    "title":  "Volume Balance Admin Config",
+    "description":  "Admin-side controls for volume balance detection scope.",
+    "sections":  [
+      {
+        "sectionId":  "scope",
+        "title":  "Scope",
+        "description":  "Optional filters applied before balance detection.",
+        "fields":  [
+          {
+            "name":  "collection_filter",
+            "label":  "Collection Filter",
+            "description":  "Filter collections for balance detection. Use ALL_COLLECTIONS (default) to treat all volumes as one pool, EACH_COLLECTION to run detection separately per collection, or a comma-separated list of names, wildcards, or regex patterns.",
+            "helpText":  "",
+            "placeholder":  "ALL_COLLECTIONS",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "volume_state",
+            "label":  "Volume State Filter",
+            "description":  "Filter volumes by state: ALL (default), ACTIVE (writable volumes below size limit), or FULL (read-only volumes above size limit).",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_ENUM",
+            "widget":  "CONFIG_WIDGET_SELECT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [
+              {
+                "value":  "ALL",
+                "label":  "All Volumes",
+                "description":  "",
+                "disabled":  false
+              },
+              {
+                "value":  "ACTIVE",
+                "label":  "Active (writable)",
+                "description":  "",
+                "disabled":  false
+              },
+              {
+                "value":  "FULL",
+                "label":  "Full (read-only)",
+                "description":  "",
+                "disabled":  false
+              }
+            ],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "data_center_filter",
+            "label":  "Data Center Filter",
+            "description":  "Only balance volumes in matching data centers (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all data centers",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "rack_filter",
+            "label":  "Rack Filter",
+            "description":  "Only balance volumes on matching racks (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all racks",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "node_filter",
+            "label":  "Node Filter",
+            "description":  "Only balance volumes on matching nodes (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all nodes",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "collection_filter":  {
+        "stringValue":  ""
+      },
+      "data_center_filter":  {
+        "stringValue":  ""
+      },
+      "node_filter":  {
+        "stringValue":  ""
+      },
+      "rack_filter":  {
+        "stringValue":  ""
+      },
+      "volume_state":  {
+        "stringValue":  "ALL"
+      }
+    }
+  },
+  "workerConfigForm":  {
+    "formId":  "volume-balance-worker",
+    "title":  "Volume Balance Worker Config",
+    "description":  "Worker-side balance thresholds.",
+    "sections":  [
+      {
+        "sectionId":  "thresholds",
+        "title":  "Detection Thresholds",
+        "description":  "Controls for when balance jobs should be proposed.",
+        "fields":  [
+          {
+            "name":  "imbalance_threshold",
+            "label":  "Imbalance Threshold",
+            "description":  "Detect when skew exceeds this ratio.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_DOUBLE",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "doubleValue":  0
+            },
+            "maxValue":  {
+              "doubleValue":  1
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "min_server_count",
+            "label":  "Minimum Server Count",
+            "description":  "Require at least this many servers for balancing.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "2"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "io_byte_per_second",
+            "label":  "Move IO Limit (bytes/sec)",
+            "description":  "Limit each volume move's copy's rate in bytes per second. 0 falls back to each volume server's own maintenance rate.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "batch_execution",
+        "title":  "Batch Execution",
+        "description":  "Controls for running multiple volume moves per job. The worker coordinates moves via gRPC and is not on the data path.",
+        "fields":  [
+          {
+            "name":  "max_concurrent_moves",
+            "label":  "Max Concurrent Moves",
+            "description":  "Maximum number of volume moves to run concurrently within a single batch job.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  {
+              "int64Value":  "50"
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "batch_size",
+            "label":  "Batch Size",
+            "description":  "Maximum number of volume moves to group into a single job. Set to 1 to disable batching.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  {
+              "int64Value":  "100"
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "batch_size":  {
+        "int64Value":  "20"
+      },
+      "imbalance_threshold":  {
+        "doubleValue":  0.2
+      },
+      "io_byte_per_second":  {
+        "int64Value":  "0"
+      },
+      "max_concurrent_moves":  {
+        "int64Value":  "5"
+      },
+      "min_server_count":  {
+        "int64Value":  "2"
+      }
+    }
+  },
+  "adminRuntimeDefaults":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  30,
+    "detectionTimeoutSeconds":  120,
+    "maxJobsPerDetection":  100,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  15,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "workerDefaultValues":  {
+    "batch_size":  {
+      "int64Value":  "20"
+    },
+    "imbalance_threshold":  {
+      "doubleValue":  0.2
+    },
+    "io_byte_per_second":  {
+      "int64Value":  "0"
+    },
+    "max_concurrent_moves":  {
+      "int64Value":  "5"
+    },
+    "min_server_count":  {
+      "int64Value":  "2"
+    }
+  }
+}

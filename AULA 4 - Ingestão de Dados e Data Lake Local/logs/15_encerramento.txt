@@ -1,0 +1,3 @@
+Stopped API PID 13248
+Stopped SeaweedFS PID 23492
+PASS: own processes stopped; ports 8001 and 8333 released

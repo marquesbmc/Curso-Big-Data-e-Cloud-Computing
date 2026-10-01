@@ -1,0 +1,67 @@
+{
+  "job_type": "admin_script",
+  "successful_runs": [
+    {
+      "run_id": "exec-1790821512353008000-eadcbf9fb17702d5",
+      "job_id": "admin_script-scheduled-1790821510352416800-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17200,
+      "completed_at": "2026-10-01T02:25:27.5531643Z"
+    },
+    {
+      "run_id": "exec-1790809829737667800-fe51c75a0ee8ec26",
+      "job_id": "admin_script-scheduled-1790809827737227100-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17038,
+      "completed_at": "2026-09-30T23:10:44.775611Z"
+    },
+    {
+      "run_id": "exec-1790807789737776100-adc5a95a7ce7641e",
+      "job_id": "admin_script-scheduled-1790807787736857600-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17082,
+      "completed_at": "2026-09-30T22:36:44.8189565Z"
+    },
+    {
+      "run_id": "exec-1790806576118910000-82f223aed961f223",
+      "job_id": "admin_script-scheduled-1790806574118441700-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17179,
+      "completed_at": "2026-09-30T22:16:31.2980362Z"
+    },
+    {
+      "run_id": "exec-1790804536107790600-54b2734b5858fc15",
+      "job_id": "admin_script-scheduled-1790804534107524800-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17187,
+      "completed_at": "2026-09-30T21:42:31.2953523Z"
+    },
+    {
+      "run_id": "exec-1790803474020450700-c4c5d0cc162d0933",
+      "job_id": "admin_script-scheduled-1790803472019652300-0",
+      "job_type": "admin_script",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "admin script executed (4 command(s))",
+      "duration_ms": 17075,
+      "completed_at": "2026-09-30T21:24:49.0954761Z"
+    }
+  ],
+  "error_runs": null,
+  "last_updated_time": "2026-10-01T02:25:27.5552673Z"
+}

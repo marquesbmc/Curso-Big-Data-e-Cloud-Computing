@@ -1,0 +1,11 @@
+REUTILIZACAO DA BASE EXISTENTE - 2026-09-30
+Nenhuma fonte foi regenerada, movida ou copiada.
+Origem preservada: D:\dev\BIGDATA\data\source (layout legado db/, files/, events/, api/).
+Lake preservado: D:\dev\BIGDATA\data\lake; watermarks antigos reaproveitados.
+Inspecao da base: 10000 pedidos, 29891 itens, 10000 pagamentos, 100210 eventos gravados, 10000 entregas.
+Teste isolado dos cinco ELs contra a origem existente: SQLite 10000 pedidos; CSV 6 arquivos; JSON 1 arquivo; eventos 30 arquivos; API 10000 entregas.
+Teste com estado antigo copiado para smoke: SQLite 0 novas linhas; CSV 6 ignorados; JSON 1 ignorado; eventos 30 ignorados.
+API default aponta para ..\data\source\api\shipments.jsonl e encontrou o arquivo.
+Sincronizador default aponta para ..\data\lake\landing, que existe.
+Tarefas/launch atualizados; compilacao, JSON e diagnosticos passaram.
+Nenhum reset real executado; nenhum objeto S3 removido.

@@ -1,0 +1,71 @@
+RESULTADO: APROVADO PARA AULA OFFLINE
+
+SeaweedFS
+Versao: 4.48 (windows amd64)
+URL oficial consultada: https://api.github.com/repos/seaweedfs/seaweedfs/releases/latest
+Asset oficial baixado: https://github.com/seaweedfs/seaweedfs/releases/download/4.48/windows_amd64.zip
+SHA-256 do ZIP: FE90C04C0620AD1A1C756F86CD5E1443773F56A446688077A4BB5EC04C3CC874
+weed.exe version: version 30GB 4.48 530be3e37337488ecc34d58441e0bc476e121c93 windows amd64
+
+Ambiente offline
+Wheelhouse resolvido com --no-index --find-links --ignore-installed: PASS
+Instalacao do ambiente novo via --no-index --find-links: PASS
+Imports fastapi, uvicorn, boto3: PASS
+Nenhuma consulta ao PyPI durante validacao/instalacao offline.
+
+Base inicial
+Clientes: 1000
+Fornecedores: 30
+Produtos: 500
+Pedidos: 10000
+Itens: 29891
+Pagamentos: 10000
+Eventos gravados: 100210 (100000 pedidos + 210 duplicatas injetadas)
+Entregas: 10000
+
+API e primeira captura
+API /docs: HTTP 200 em http://127.0.0.1:8001/docs
+Primeira captura: 10000 pedidos, 29891 itens, 10000 pagamentos, 100210 eventos copiados em 30 arquivos e 10000 entregas em 10 paginas.
+Landing local: 44 arquivos, 34581470 bytes (aprox. 32.98 MiB conforme inspect_data).
+
+SeaweedFS e sincronizacao
+Endpoint: http://127.0.0.1:8333; bucket: curso-bigdata; status: ok.
+Portas durante teste: 8333, 9333 e 8888 abertas.
+Primeira sincronizacao: 44 objetos, 34581470 bytes.
+Bucket inicial: 44 objetos, 34581470 bytes.
+Simulacao: 5 lotes, 100 pedidos, 252 itens, 100 pagamentos, 800 eventos e 100 entregas.
+Captura incremental: 100 pedidos, 252 itens, 100 pagamentos, 800 eventos e 100 entregas; nenhum registro antigo recapturado.
+Inspecao apos captura: 10100 pedidos; lake total 52 arquivos, 33.32 MB.
+Sincronizacao incremental: 5 enviados, 44 ignorados, 348990 bytes.
+Bucket incremental: 49 objetos, 34930460 bytes.
+Teste de captura idempotente: zero linhas novas no banco e zero entregas; arquivos de lote/evento ignorados.
+Teste de sync idempotente: 0 enviados, 49 ignorados, 0 bytes enviados.
+SHA-256: validado por metadata S3; hash igual ignora objeto, hash alterado reenviaria o arquivo no teste simulado anterior.
+
+VS Code
+JSON valido; 18 tarefas esperadas presentes; quatro tarefas SeaweedFS fixadas no endpoint local.
+
+Backups preservados
+D:\dev\BIGDATA\.venv_before_full_test_20260930_160337
+D:\dev\BIGDATA\data_before_full_test_20260930_160337
+seaweed-data nao existia antes do teste; nenhum backup deste diretorio foi necessario.
+
+Processos e portas no encerramento
+API PID 13248 encerrado (processo iniciado por este teste).
+SeaweedFS PID 23492 encerrado (processo iniciado por este teste).
+Portas 8001 e 8333 liberadas.
+
+Erros/correcoes
+A execucao composta pelo executor de tarefas VS Code nao anexou terminal; as etapas foram executadas via PowerShell.
+Nenhuma falha funcional ocorreu no pipeline.
+
+Logs detalhados: D:\dev\BIGDATA\logs
+
+Preparacao final da aula (2026-09-30)
+Detectado e corrigido: a tarefa demo preservava source, mas deixava watermarks antigos no lake ativo.
+Implementado --reset-lake com backup automatico; tarefas 10/11 agora preservam e recriam o lake.
+Base atual: 10000 pedidos, 29891 itens, 10000 pagamentos, 100210 eventos e 10000 entregas.
+Lake ativo atual: vazio, sem capture_state.json; pronto para captura inicial da aula.
+Backups adicionais: D:\dev\BIGDATA\data\lake_backup_20260930_161439 e D:\dev\BIGDATA\data\source_backup_20260930_161439.
+Workspace pronta: .venv, wheelhouse e tools\seaweedfs\weed.exe presentes; API/SeaweedFS parados e portas 8001/8333 livres.
+Tasks JSON final: 18 tarefas validas; tarefa 10 inclui --reset-lake.

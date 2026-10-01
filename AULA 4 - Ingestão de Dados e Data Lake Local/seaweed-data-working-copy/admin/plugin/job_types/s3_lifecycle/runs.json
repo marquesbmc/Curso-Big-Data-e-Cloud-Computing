@@ -1,0 +1,47 @@
+{
+  "job_type": "s3_lifecycle",
+  "successful_runs": [
+    {
+      "run_id": "exec-1790810916270346000-f963cc3a46da5c16",
+      "job_id": "s3_lifecycle-scheduled-1790810916265670700-0",
+      "job_type": "s3_lifecycle",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "s3 lifecycle daily replay completed",
+      "duration_ms": 28,
+      "completed_at": "2026-09-30T23:28:36.2944685Z"
+    },
+    {
+      "run_id": "exec-1790808026737832900-8564a64ac18f57eb",
+      "job_id": "s3_lifecycle-scheduled-1790808026734570200-0",
+      "job_type": "s3_lifecycle",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "s3 lifecycle daily replay completed",
+      "duration_ms": 30,
+      "completed_at": "2026-09-30T22:40:26.7647699Z"
+    },
+    {
+      "run_id": "exec-1790804773107548100-59ffefdb9a9b369b",
+      "job_id": "s3_lifecycle-scheduled-1790804773105868100-0",
+      "job_type": "s3_lifecycle",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "s3 lifecycle daily replay completed",
+      "duration_ms": 22,
+      "completed_at": "2026-09-30T21:46:13.1283465Z"
+    },
+    {
+      "run_id": "exec-1790803711027104600-d510d86819562a75",
+      "job_id": "s3_lifecycle-scheduled-1790803711022536700-0",
+      "job_type": "s3_lifecycle",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "s3 lifecycle daily replay completed",
+      "duration_ms": 21,
+      "completed_at": "2026-09-30T21:28:31.0445219Z"
+    }
+  ],
+  "error_runs": null,
+  "last_updated_time": "2026-09-30T23:28:36.2975155Z"
+}

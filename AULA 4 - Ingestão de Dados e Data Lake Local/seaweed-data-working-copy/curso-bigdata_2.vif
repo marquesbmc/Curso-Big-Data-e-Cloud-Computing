@@ -1,0 +1,11 @@
+{
+  "files":  [],
+  "version":  3,
+  "replication":  "",
+  "bytesOffset":  4,
+  "datFileSize":  "0",
+  "expireAtSec":  "0",
+  "readOnly":  false,
+  "ecShardConfig":  null,
+  "readOnlyCanDelete":  false
+}

@@ -1,0 +1,37 @@
+{
+  "job_type": "vacuum",
+  "successful_runs": [
+    {
+      "run_id": "exec-1790821535594044900-27c0ddb4724c6ea7",
+      "job_id": "vacuum-scheduled-1790821533593721700-0",
+      "job_type": "vacuum",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "vacuum completed for volume 2",
+      "duration_ms": 2019,
+      "completed_at": "2026-10-01T02:25:35.6129386Z"
+    },
+    {
+      "run_id": "exec-1790808813743477500-5ceee734bafbcedd",
+      "job_id": "vacuum-scheduled-1790808811743443000-0",
+      "job_type": "vacuum",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "vacuum completed for volume 2",
+      "duration_ms": 2023,
+      "completed_at": "2026-09-30T22:53:33.7672014Z"
+    },
+    {
+      "run_id": "exec-1790807812831939900-3d7609c61d2ced0f",
+      "job_id": "vacuum-scheduled-1790807810831562700-0",
+      "job_type": "vacuum",
+      "worker_id": "w-DESKTO-4026",
+      "outcome": "success",
+      "message": "vacuum completed for volume 2",
+      "duration_ms": 2019,
+      "completed_at": "2026-09-30T22:36:52.8514583Z"
+    }
+  ],
+  "error_runs": null,
+  "last_updated_time": "2026-10-01T02:25:35.6145866Z"
+}

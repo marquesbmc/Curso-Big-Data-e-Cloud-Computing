@@ -1,0 +1,1 @@
+PASS: backup=D:\dev\BIGDATA\work\reset-smoke\data\lake_reset_backup_20260930_165934; lake ativo vazio; source preservado

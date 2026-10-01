@@ -1,0 +1,2 @@
+d0b74c3c
+{"lastIndex":4,"lastTerm":0,"peers":[{"name":"192.168.1.252:9334.19334","connectionString":"192.168.1.252:19334"}],"state":"eyJtYXhWb2x1bWVJZCI6MCwidG9wb2xvZ3lJZCI6ImM1NmNlNDUxLTUyYmQtNGZjZC04ZDFkLTQ2MTVmZWVjMTYzMSJ9","path":"D:\\dev\\BIGDATA\\seaweed-data-working-copy/m9334/snapshot/0_4.ss"}

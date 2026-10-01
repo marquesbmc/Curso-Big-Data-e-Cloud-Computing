@@ -1,0 +1,43 @@
+requirements.txt: True
+generate.py: True
+api_app.py: True
+capture.py: True
+simulate_live.py: True
+inspect_data.py: True
+sync_to_seaweedfs.py: True
+.vscode\tasks.json: True
+wheelhouse: True
+
+Name                 Mode  Length
+----                 ----  ------
+__pycache__          d---- 
+.venv                d---- 
+.vscode              d---- 
+data                 d---- 
+logs                 d---- 
+wheelhouse           d---- 
+.gitignore           -a--- 72
+api_app.py           -a--- 2686
+capture.py           -a--- 5999
+config.py            -a--- 701
+generate.py          -a--- 19659
+inspect_data.py      -a--- 1585
+README.md            -a--- 7786
+requirements.txt     -a--- 61
+simulate_live.py     -a--- 6962
+sync_to_seaweedfs.py -a--- 4930
+utils.py             -a--- 1689
+
+
+tag_name: 4.48
+html_url: https://github.com/seaweedfs/seaweedfs/releases/tag/4.48
+asset: windows_amd64.zip
+asset_url: https://github.com/seaweedfs/seaweedfs/releases/download/4.48/windows_amd64.zip
+size_bytes: 47000874
+download_url=https://github.com/seaweedfs/seaweedfs/releases/download/4.48/windows_amd64.zip
+zip_sha256=FE90C04C0620AD1A1C756F86CD5E1443773F56A446688077A4BB5EC04C3CC874
+zip_bytes=47000874
+version 30GB 4.48 530be3e37337488ecc34d58441e0bc476e121c93 windows amd64
+
+For enterprise users, please visit https://seaweedfs.com for the SeaweedFS Enterprise Edition,
+which has advanced features, including data recovery, self-healing storage, customizable erasure coding, EC vacuum and repair, etc.

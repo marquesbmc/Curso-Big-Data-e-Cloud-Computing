@@ -1,0 +1,52 @@
+{
+  "jobType":  "volume_balance",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "collection_filter":  {
+      "stringValue":  ""
+    },
+    "data_center_filter":  {
+      "stringValue":  ""
+    },
+    "node_filter":  {
+      "stringValue":  ""
+    },
+    "rack_filter":  {
+      "stringValue":  ""
+    },
+    "volume_state":  {
+      "stringValue":  "ALL"
+    }
+  },
+  "workerConfigValues":  {
+    "batch_size":  {
+      "int64Value":  "20"
+    },
+    "imbalance_threshold":  {
+      "doubleValue":  0.2
+    },
+    "io_byte_per_second":  {
+      "int64Value":  "0"
+    },
+    "max_concurrent_moves":  {
+      "int64Value":  "5"
+    },
+    "min_server_count":  {
+      "int64Value":  "2"
+    }
+  },
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  30,
+    "detectionTimeoutSeconds":  120,
+    "maxJobsPerDetection":  100,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  15,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "updatedAt":  "2026-09-30T21:23:26.569650700Z",
+  "updatedBy":  "plugin"
+}

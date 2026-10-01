@@ -1,0 +1,4 @@
+pid=23492
+data=D:\dev\BIGDATA\seaweed-data
+endpoint=http://127.0.0.1:8333
+bucket=curso-bigdata

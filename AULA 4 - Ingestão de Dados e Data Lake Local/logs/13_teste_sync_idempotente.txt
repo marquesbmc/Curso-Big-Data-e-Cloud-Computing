@@ -1,0 +1,6 @@
+{
+  "bucket": "curso-bigdata",
+  "uploaded_objects": 0,
+  "skipped_objects": 49,
+  "uploaded_bytes": 0
+}

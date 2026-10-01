@@ -1,0 +1,29 @@
+{
+  "profile": "demo",
+  "seed": 2026,
+  "error_rate": 0.02,
+  "period_start": "2026-08-31T23:59:59+00:00",
+  "period_end": "2026-09-30T23:59:59+00:00",
+  "database": {
+    "customers": 1000,
+    "suppliers": 30,
+    "products": 500,
+    "orders": 10000,
+    "order_items": 29891,
+    "payments": 10000
+  },
+  "batch_files": {
+    "catalog_rows": 500,
+    "inventory_snapshots": 5,
+    "campaigns": 10
+  },
+  "events": {
+    "events_requested": 100000,
+    "event_rows_written": 100210,
+    "duplicates_injected": 210
+  },
+  "api": {
+    "shipments": 10000
+  },
+  "elapsed_seconds": 2.41
+}

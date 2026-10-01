@@ -1,0 +1,27 @@
+{
+  "run_id": "20260930T191058Z",
+  "started_at": "2026-09-30T19:10:58.376032+00:00",
+  "database": {
+    "customers": 0,
+    "suppliers": 0,
+    "products": 0,
+    "orders": 100,
+    "order_items": 252,
+    "payments": 100
+  },
+  "files": {
+    "copied": 0,
+    "skipped": 7,
+    "bytes": 0
+  },
+  "events": {
+    "copied": 1,
+    "skipped": 30,
+    "bytes": 244511
+  },
+  "api": {
+    "rows": 100,
+    "pages": 1
+  },
+  "finished_at": "2026-09-30T19:10:58.563999+00:00"
+}

@@ -1,0 +1,17 @@
+
+  Starting SeaweedFS Mini ...
+  Master       starting
+  Master       ready     0.2s
+  Volume       starting
+  Volume       ready     0.2s
+  Filer        starting
+  Filer        ready     0.2s
+  S3           starting
+  WebDAV       starting
+  S3           ready     0.2s
+  Iceberg      starting
+  Iceberg      ready     0.0s
+  Lance        starting
+  Lance        ready     0.0s
+  WebDAV       ready     0.4s
+  Admin        starting

@@ -1,0 +1,46 @@
+{
+  "jobType":  "ec_balance",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "collection_filter":  {
+      "stringValue":  ""
+    },
+    "data_center_filter":  {
+      "stringValue":  ""
+    },
+    "disk_type":  {
+      "stringValue":  ""
+    },
+    "shard_replica_placement":  {
+      "stringValue":  ""
+    }
+  },
+  "workerConfigValues":  {
+    "imbalance_threshold":  {
+      "doubleValue":  0.2
+    },
+    "io_byte_per_second":  {
+      "int64Value":  "0"
+    },
+    "min_server_count":  {
+      "int64Value":  "3"
+    },
+    "preferred_tags":  {
+      "stringValue":  ""
+    }
+  },
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  30,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  500,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  30,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "updatedAt":  "2026-09-30T21:23:26.539794500Z",
+  "updatedBy":  "plugin"
+}

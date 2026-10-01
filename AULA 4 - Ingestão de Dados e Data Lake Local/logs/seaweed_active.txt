@@ -1,0 +1,1 @@
+SeaweedFS cópia funcional iniciada em background. PID=26664; data=seaweed-data-working-copy; port=8333

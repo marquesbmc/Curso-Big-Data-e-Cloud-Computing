@@ -1,0 +1,3 @@
+W0930 18:06:20.749924 admin.go:818 Worker gRPC control plane is bound to 0.0.0.0 (non-loopback) without grpc.admin mTLS.
+W0930 18:06:20.757799 admin.go:819 Anyone who can reach port 33646 can register a maintenance worker unauthenticated.
+W0930 18:06:20.758371 admin.go:820 Enable [grpc.admin] cert/key and [grpc.ca] in security.toml, or bind to loopback.

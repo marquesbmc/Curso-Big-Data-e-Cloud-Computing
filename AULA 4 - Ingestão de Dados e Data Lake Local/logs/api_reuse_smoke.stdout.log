@@ -1,0 +1,11 @@
+INFO:     127.0.0.1:52294 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52310 - "GET /shipments?page=1&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52311 - "GET /shipments?page=2&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52312 - "GET /shipments?page=3&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52313 - "GET /shipments?page=4&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52314 - "GET /shipments?page=5&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52315 - "GET /shipments?page=6&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52316 - "GET /shipments?page=7&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52317 - "GET /shipments?page=8&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52318 - "GET /shipments?page=9&limit=1000&after_sequence=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52319 - "GET /shipments?page=10&limit=1000&after_sequence=0 HTTP/1.1" 200 OK

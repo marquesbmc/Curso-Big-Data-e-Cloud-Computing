@@ -1,0 +1,30 @@
+{
+  "database_rows": {
+    "customers": 1000,
+    "suppliers": 30,
+    "products": 500,
+    "orders": 10000,
+    "order_items": 29891,
+    "payments": 10000
+  },
+  "source": {
+    "files": 40,
+    "size": "29.26 MB"
+  },
+  "source_files": {
+    "files": 7,
+    "size": "90.32 KB"
+  },
+  "source_events": {
+    "files": 30,
+    "size": "22.37 MB"
+  },
+  "source_api": {
+    "files": 1,
+    "size": "2.51 MB"
+  },
+  "lake": {
+    "files": 46,
+    "size": "32.98 MB"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "sqlite": {
+    "customers": 1000,
+    "suppliers": 30,
+    "products": 500,
+    "orders": 10000,
+    "order_items": 29891,
+    "payments": 10000
+  },
+  "run_id": "20260930T201524Z",
+  "started_at": "2026-09-30T20:15:24.815677+00:00",
+  "finished_at": "2026-09-30T20:15:25.176837+00:00"
+}

@@ -1,0 +1,37 @@
+{
+  "jobType":  "erasure_coding",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "collection_filter":  {
+      "stringValue":  ""
+    }
+  },
+  "workerConfigValues":  {
+    "fullness_ratio":  {
+      "doubleValue":  0.95
+    },
+    "min_size_mb":  {
+      "int64Value":  "30"
+    },
+    "preferred_tags":  {
+      "stringValue":  ""
+    },
+    "quiet_for_seconds":  {
+      "int64Value":  "3600"
+    }
+  },
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  17,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  500,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  30,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "updatedAt":  "2026-09-30T21:23:26.544978200Z",
+  "updatedBy":  "plugin"
+}

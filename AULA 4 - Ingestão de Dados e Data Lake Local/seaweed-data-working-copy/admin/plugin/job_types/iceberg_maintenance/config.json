@@ -1,0 +1,91 @@
+{
+  "jobType":  "iceberg_maintenance",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "bucket_filter":  {
+      "stringValue":  ""
+    },
+    "max_tables_per_resource_group":  {
+      "int64Value":  "0"
+    },
+    "namespace_filter":  {
+      "stringValue":  ""
+    },
+    "resource_group_by":  {
+      "stringValue":  "none"
+    },
+    "table_filter":  {
+      "stringValue":  ""
+    }
+  },
+  "workerConfigValues":  {
+    "apply_deletes":  {
+      "boolValue":  true
+    },
+    "delete_max_file_group_size_mb":  {
+      "int64Value":  "256"
+    },
+    "delete_max_output_files":  {
+      "int64Value":  "8"
+    },
+    "delete_min_input_files":  {
+      "int64Value":  "2"
+    },
+    "delete_target_file_size_mb":  {
+      "int64Value":  "64"
+    },
+    "max_commit_retries":  {
+      "int64Value":  "5"
+    },
+    "max_snapshots_to_keep":  {
+      "int64Value":  "5"
+    },
+    "min_input_files":  {
+      "int64Value":  "5"
+    },
+    "operations":  {
+      "stringValue":  "all"
+    },
+    "orphan_older_than_hours":  {
+      "int64Value":  "72"
+    },
+    "rewrite_strategy":  {
+      "stringValue":  "binpack"
+    },
+    "snapshot_retention_hours":  {
+      "int64Value":  "168"
+    },
+    "sort_buffer_rows":  {
+      "int64Value":  "262144"
+    },
+    "sort_max_input_mb":  {
+      "int64Value":  "0"
+    },
+    "sort_spill_dir":  {
+      "stringValue":  ""
+    },
+    "table_properties_override":  {
+      "boolValue":  true
+    },
+    "target_file_size_mb":  {
+      "int64Value":  "256"
+    },
+    "where":  {
+      "stringValue":  ""
+    }
+  },
+  "adminRuntime":  {
+    "enabled":  false,
+    "detectionIntervalMinutes":  60,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  100,
+    "globalExecutionConcurrency":  4,
+    "perWorkerExecutionConcurrency":  2,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  60,
+    "jobTypeMaxRuntimeSeconds":  3600,
+    "executionTimeoutSeconds":  3600
+  },
+  "updatedAt":  "2026-09-30T21:23:26.551018200Z",
+  "updatedBy":  "plugin"
+}

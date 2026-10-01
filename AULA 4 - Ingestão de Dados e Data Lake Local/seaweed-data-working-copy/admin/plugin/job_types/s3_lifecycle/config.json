@@ -1,0 +1,33 @@
+{
+  "jobType":  "s3_lifecycle",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "cluster_deletes_burst":  {
+      "int64Value":  "0"
+    },
+    "cluster_deletes_per_second":  {
+      "int64Value":  "0"
+    },
+    "meta_log_retention_days":  {
+      "int64Value":  "0"
+    },
+    "walker_interval_minutes":  {
+      "int64Value":  "0"
+    }
+  },
+  "workerConfigValues":  {},
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  1440,
+    "detectionTimeoutSeconds":  60,
+    "maxJobsPerDetection":  1,
+    "globalExecutionConcurrency":  0,
+    "perWorkerExecutionConcurrency":  0,
+    "retryLimit":  0,
+    "retryBackoffSeconds":  0,
+    "jobTypeMaxRuntimeSeconds":  2147483647,
+    "executionTimeoutSeconds":  2147483647
+  },
+  "updatedAt":  "2026-09-30T21:23:26.557054100Z",
+  "updatedBy":  "plugin"
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "campaign_id": 1,
+    "name": "Campanha 0001",
+    "channel": "social",
+    "start_date": "2026-09-20",
+    "end_date": "2026-10-04",
+    "budget_cents": 4465232
+  },
+  {
+    "campaign_id": 2,
+    "name": "Campanha 0002",
+    "channel": "search",
+    "start_date": "2026-09-18",
+    "end_date": "2026-10-05",
+    "budget_cents": 1418494
+  },
+  {
+    "campaign_id": 3,
+    "name": "Campanha 0003",
+    "channel": "social",
+    "start_date": "2026-09-28",
+    "end_date": "2026-10-03",
+    "budget_cents": 3118802
+  },
+  {
+    "campaign_id": 4,
+    "name": "Campanha 0004",
+    "channel": "social",
+    "start_date": "2026-09-05",
+    "end_date": "2026-09-07",
+    "budget_cents": 4557135
+  },
+  {
+    "campaign_id": 5,
+    "name": "Campanha 0005",
+    "channel": "social",
+    "start_date": "2026-09-21",
+    "end_date": "2026-10-02",
+    "budget_cents": 384998
+  },
+  {
+    "campaign_id": 6,
+    "name": "Campanha 0006",
+    "channel": "search",
+    "start_date": "2026-09-24",
+    "end_date": "2026-10-13",
+    "budget_cents": 2754212
+  },
+  {
+    "campaign_id": 7,
+    "name": "Campanha 0007",
+    "channel": "search",
+    "start_date": "2026-09-23",
+    "end_date": "2026-09-27",
+    "budget_cents": 4284136
+  },
+  {
+    "campaign_id": 8,
+    "name": "Campanha 0008",
+    "channel": "email",
+    "start_date": "2026-09-12",
+    "end_date": "2026-09-19",
+    "budget_cents": 2448577
+  },
+  {
+    "campaign_id": 9,
+    "name": "Campanha 0009",
+    "channel": "affiliate",
+    "start_date": "2026-09-26",
+    "end_date": "2026-10-13",
+    "budget_cents": 2854423
+  },
+  {
+    "campaign_id": 10,
+    "name": "Campanha 0010",
+    "channel": "email",
+    "start_date": "2026-09-27",
+    "end_date": "2026-10-13",
+    "budget_cents": 2476613
+  }
+]

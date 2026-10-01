@@ -1,0 +1,39 @@
+REORGANIZACAO DA AULA 4 - 2026-09-30
+Pasta do projeto: D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local
+Escopo da pasta: somente sistema/configuracoes; data/ nao foi trazida para ela.
+Dados originais mantidos em D:\dev\BIGDATA\data.
+SeaweedFS do usuario permaneceu ativo em 8333; API de smoke (PID 22696) encerrada; 8001/8002 livres.
+Capturador geral capture.py removido; nao ha referencias restantes.
+Capturadores individuais: capture_sqlite.py, capture_csv.py, capture_json.py, capture_events.py, capture_api.py.
+Diretorios de dados quando gerados: sqlite, csv, json, events, api; Landing com os mesmos cinco prefixos.
+Validacao: todos os cinco capturadores passaram, incluindo segunda execucao idempotente.
+Captura inicial de smoke: 10000 pedidos e 10000 entregas pela API; CSV 6 arquivos; JSON 1; eventos 30.
+Tasks JSON valido: 21 tarefas; cinco tarefas de captura; 9 configuracoes de debug.
+Compilacao Python e diagnosticos VS Code: PASS.
+Teste isolado em D:\dev\BIGDATA\work\lesson-smoke; nenhum objeto enviado ao SeaweedFS durante este teste.
+SEPARACAO DE GERADORES - 2026-09-30
+Pasta externa: D:\dev\BIGDATA\PREPARAÇÃO - Geradores da Aula 4
+Movidos: generate.py, simulate_live.py, config.py; adicionado generator_utils.py.
+A pasta AULA 4 não contém scripts geradores; capturadores e aplicações permaneceram nela.
+Tarefas de instrutor 10/11/12/30/31 atualizadas para chamar a pasta externa e gravar em AULA 4\data.
+Teste isolado: demo criada fora do projeto de aula com sqlite, csv, json, events e api; simulador adicionou 2 pedidos sem erro.
+Tarefas JSON e diagnósticos: PASS. README/TUTORIAL/API sem referências aos nomes generate.py ou simulate_live.py.
+Dados ativos e SeaweedFS não foram alterados.
+DADOS MOVIDOS PARA A PASTA AULA 4 - 2026-09-30
+Origem anterior: D:\dev\BIGDATA\data
+Destino atual: D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local\data
+Movido inteiro, incluindo source, lake e backups já existentes; sem regenerar nem apagar dados.
+Base ainda legível: 10000 pedidos, 29891 itens, 10000 pagamentos, 100210 eventos e 10000 entregas.
+Lake ativo vazio por reset prévio; source não alterado.
+Tarefas e defaults atualizados para data/ dentro do projeto; wheelhouse, .venv e SeaweedFS permanecem no diretório pai.
+Geradores permanecem externos; variante do simulate_live arquivada na pasta PREPARAÇÃO.
+JSON/tasks, compilação, inspeção e diagnósticos: PASS.
+RECUPERACAO SEAWEEDFS MINI - 2026-09-30
+Erro original: panic em loadMiniConfigurationFile ao iniciar seaweed-data.
+Executavel: SeaweedFS 4.48 Windows AMD64.
+seaweed-data original preservado sem edicao.
+Copia integral de teste inicializou com sucesso; promovida a D:\dev\BIGDATA\seaweed-data-working-copy.
+Servico ativo: PID 26664; endpoint http://127.0.0.1:8333.
+Teste boto3 --check: status ok; bucket curso-bigdata.
+Inspecao: 56 objetos, 45960326 bytes.
+Tarefa 50 e tutorial apontam para a copia funcional. O original permanece como backup.

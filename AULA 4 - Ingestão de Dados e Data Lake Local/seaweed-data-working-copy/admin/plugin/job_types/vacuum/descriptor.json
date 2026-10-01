@@ -1,0 +1,205 @@
+{
+  "jobType":  "vacuum",
+  "displayName":  "Volume Vacuum",
+  "description":  "Detect and vacuum volumes with high garbage ratio",
+  "icon":  "fas fa-broom",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "vacuum-admin",
+    "title":  "Vacuum Admin Config",
+    "description":  "Admin-side controls for vacuum detection scope.",
+    "sections":  [
+      {
+        "sectionId":  "scope",
+        "title":  "Scope",
+        "description":  "Optional filter to restrict detection.",
+        "fields":  [
+          {
+            "name":  "collection_filter",
+            "label":  "Collection Filter",
+            "description":  "Filter collections for vacuum detection. Use ALL_COLLECTIONS (default) to treat all volumes as one pool, EACH_COLLECTION to run detection separately per collection, or a comma-separated list of names, wildcards, or regex patterns.",
+            "helpText":  "",
+            "placeholder":  "ALL_COLLECTIONS",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "volume_state",
+            "label":  "Volume State Filter",
+            "description":  "Filter volumes by state: ALL (default), ACTIVE (writable volumes below size limit), or FULL (read-only volumes above size limit).",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_ENUM",
+            "widget":  "CONFIG_WIDGET_SELECT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [
+              {
+                "value":  "ALL",
+                "label":  "All Volumes",
+                "description":  "",
+                "disabled":  false
+              },
+              {
+                "value":  "ACTIVE",
+                "label":  "Active (writable)",
+                "description":  "",
+                "disabled":  false
+              },
+              {
+                "value":  "FULL",
+                "label":  "Full (read-only)",
+                "description":  "",
+                "disabled":  false
+              }
+            ],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "data_center_filter",
+            "label":  "Data Center Filter",
+            "description":  "Only vacuum volumes in matching data centers (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all data centers",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "rack_filter",
+            "label":  "Rack Filter",
+            "description":  "Only vacuum volumes on matching racks (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all racks",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "node_filter",
+            "label":  "Node Filter",
+            "description":  "Only vacuum volumes on matching nodes (comma-separated, wildcards supported). Leave empty for all.",
+            "helpText":  "",
+            "placeholder":  "all nodes",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "collection_filter":  {
+        "stringValue":  ""
+      },
+      "data_center_filter":  {
+        "stringValue":  ""
+      },
+      "node_filter":  {
+        "stringValue":  ""
+      },
+      "rack_filter":  {
+        "stringValue":  ""
+      },
+      "volume_state":  {
+        "stringValue":  "ALL"
+      }
+    }
+  },
+  "workerConfigForm":  {
+    "formId":  "vacuum-worker",
+    "title":  "Vacuum Worker Config",
+    "description":  "Worker-side vacuum thresholds.",
+    "sections":  [
+      {
+        "sectionId":  "thresholds",
+        "title":  "Thresholds",
+        "description":  "Detection thresholds and timing constraints.",
+        "fields":  [
+          {
+            "name":  "garbage_threshold",
+            "label":  "Garbage Threshold",
+            "description":  "Detect volumes with garbage ratio >= threshold.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_DOUBLE",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "doubleValue":  0
+            },
+            "maxValue":  {
+              "doubleValue":  1
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "garbage_threshold":  {
+        "doubleValue":  0.3
+      }
+    }
+  },
+  "adminRuntimeDefaults":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  17,
+    "detectionTimeoutSeconds":  120,
+    "maxJobsPerDetection":  200,
+    "globalExecutionConcurrency":  16,
+    "perWorkerExecutionConcurrency":  4,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  10,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "workerDefaultValues":  {
+    "garbage_threshold":  {
+      "doubleValue":  0.3
+    }
+  }
+}

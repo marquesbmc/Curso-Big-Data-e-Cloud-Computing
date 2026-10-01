@@ -1,0 +1,81 @@
+{
+  "jobType":  "admin_script",
+  "displayName":  "Admin Script",
+  "description":  "Run custom admin shell scripts not covered by built-in job types",
+  "icon":  "fas fa-terminal",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "admin-script-admin",
+    "title":  "Admin Script Configuration",
+    "description":  "Define the admin shell script to execute.",
+    "sections":  [
+      {
+        "sectionId":  "script",
+        "title":  "Script",
+        "description":  "Commands run sequentially by the admin script worker.",
+        "fields":  [
+          {
+            "name":  "script",
+            "label":  "Script",
+            "description":  "Admin shell commands to execute (one per line).",
+            "helpText":  "Lock/unlock are handled by the admin server; omit explicit lock/unlock commands.",
+            "placeholder":  "volume.balance -apply\nvolume.fix.replication -apply",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXTAREA",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "run_interval_minutes",
+            "label":  "Run Interval (minutes)",
+            "description":  "Minimum interval between successful admin script runs.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  true,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "run_interval_minutes":  {
+        "int64Value":  "17"
+      },
+      "script":  {
+        "stringValue":  "fs.log.purge -daysAgo=7\nvolume.deleteEmpty -quietFor=24h -apply\nvolume.fix.replication -apply\ns3.clean.uploads -timeAgo=24h"
+      }
+    }
+  },
+  "workerConfigForm":  null,
+  "adminRuntimeDefaults":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  17,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  1,
+    "globalExecutionConcurrency":  1,
+    "perWorkerExecutionConcurrency":  1,
+    "retryLimit":  0,
+    "retryBackoffSeconds":  30,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "workerDefaultValues":  {}
+}

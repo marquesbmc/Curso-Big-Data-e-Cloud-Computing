@@ -1,0 +1,27 @@
+      5c
+	raft:join"M{"name":"192.168.1.252:9333.19333","connectionString":"192.168.1.252:19333"}
+       c
+raft:nop      33
+MaxVolumeId""{"maxVolumeId":0,"topologyId":""}
+      57
+MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+      57
+MaxVolumeId"F{"maxVolumeId":1,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+      59
+MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+       e
+raft:nop       e
+raft:nop      59
+	MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+      59
+
+MaxVolumeId"F{"maxVolumeId":2,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+       e
+raft:nop      59
+MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+       e
+raft:nop      59
+MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}
+       e
+raft:nop      59
+MaxVolumeId"F{"maxVolumeId":0,"topologyId":"6b113f68-77c1-405d-84a8-d7d54e579f26"}

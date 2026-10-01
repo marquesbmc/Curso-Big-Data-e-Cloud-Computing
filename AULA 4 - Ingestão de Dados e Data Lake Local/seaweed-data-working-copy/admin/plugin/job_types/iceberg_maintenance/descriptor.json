@@ -1,0 +1,683 @@
+{
+  "jobType":  "iceberg_maintenance",
+  "displayName":  "Iceberg Maintenance",
+  "description":  "Automated maintenance for Iceberg tables: data compaction, delete-file rewrite, snapshot expiration, orphan removal, and manifest rewriting",
+  "icon":  "fas fa-snowflake",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "iceberg-maintenance-admin",
+    "title":  "Iceberg Maintenance Admin Config",
+    "description":  "Admin-side controls for Iceberg table maintenance scope.",
+    "sections":  [
+      {
+        "sectionId":  "scope",
+        "title":  "Scope",
+        "description":  "Filters to restrict which tables are scanned for maintenance.",
+        "fields":  [
+          {
+            "name":  "bucket_filter",
+            "label":  "Bucket Filter",
+            "description":  "Comma-separated wildcard patterns for table buckets (* and ? supported). Blank = all.",
+            "helpText":  "",
+            "placeholder":  "prod-*, staging-*",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "namespace_filter",
+            "label":  "Namespace Filter",
+            "description":  "Comma-separated wildcard patterns for namespaces (* and ? supported). Blank = all.",
+            "helpText":  "",
+            "placeholder":  "analytics, events-*",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "table_filter",
+            "label":  "Table Filter",
+            "description":  "Comma-separated wildcard patterns for table names (* and ? supported). Blank = all.",
+            "helpText":  "",
+            "placeholder":  "clicks, orders-*",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "resources",
+        "title":  "Resource Groups",
+        "description":  "Controls for fair proposal distribution across buckets or namespaces.",
+        "fields":  [
+          {
+            "name":  "resource_group_by",
+            "label":  "Group Proposals By",
+            "description":  "When set, detection emits proposals in round-robin order across the selected resource group.",
+            "helpText":  "",
+            "placeholder":  "none, bucket, namespace, or bucket_namespace",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "max_tables_per_resource_group",
+            "label":  "Max Tables Per Group",
+            "description":  "Optional cap on how many proposals a single resource group can receive in one detection run. Zero disables the cap.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "bucket_filter":  {
+        "stringValue":  ""
+      },
+      "max_tables_per_resource_group":  {
+        "int64Value":  "0"
+      },
+      "namespace_filter":  {
+        "stringValue":  ""
+      },
+      "resource_group_by":  {
+        "stringValue":  "none"
+      },
+      "table_filter":  {
+        "stringValue":  ""
+      }
+    }
+  },
+  "workerConfigForm":  {
+    "formId":  "iceberg-maintenance-worker",
+    "title":  "Iceberg Maintenance Worker Config",
+    "description":  "Worker-side thresholds for maintenance operations.",
+    "sections":  [
+      {
+        "sectionId":  "snapshots",
+        "title":  "Snapshot Expiration",
+        "description":  "Controls for automatic snapshot cleanup.",
+        "fields":  [
+          {
+            "name":  "snapshot_retention_hours",
+            "label":  "Retention (hours)",
+            "description":  "Expire snapshots older than this many hours.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "max_snapshots_to_keep",
+            "label":  "Max Snapshots",
+            "description":  "Always keep at least this many most recent snapshots.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "compaction",
+        "title":  "Data Compaction",
+        "description":  "Controls for bin-packing or sorting small Parquet data files.",
+        "fields":  [
+          {
+            "name":  "target_file_size_mb",
+            "label":  "Target File Size (MB)",
+            "description":  "Files smaller than this (in megabytes) are candidates for compaction.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "min_input_files",
+            "label":  "Min Input Files",
+            "description":  "Minimum number of small files in a partition to trigger compaction.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "2"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "apply_deletes",
+            "label":  "Apply Deletes",
+            "description":  "When true, compaction applies position and equality deletes to data files. When false, tables with delete manifests are skipped.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_BOOL",
+            "widget":  "CONFIG_WIDGET_TOGGLE",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "rewrite_strategy",
+            "label":  "Rewrite Strategy",
+            "description":  "binpack keeps the existing row order; sort rewrites each compaction bin using the Iceberg table sort order; auto sorts tables that declare one and bin-packs the rest.",
+            "helpText":  "",
+            "placeholder":  "binpack or sort",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "sort_buffer_rows",
+            "label":  "Sort Buffer Rows",
+            "description":  "Rows a sorted rewrite holds in memory before spilling a sorted run to disk. The writer merges at most 32K runs, so this also bounds how many rows one output file can hold.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1024"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "sort_spill_dir",
+            "label":  "Sort Spill Directory",
+            "description":  "Directory holding a sorted rewrite's temporary runs. Empty uses the system temp directory.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "sort_max_input_mb",
+            "label":  "Sort Max Input (MB)",
+            "description":  "Optional hard cap for the total bytes in a sorted compaction bin. Zero = no extra cap beyond binning.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "delete_rewrite",
+        "title":  "Delete Rewrite",
+        "description":  "Controls for rewriting small position-delete files into fewer larger files.",
+        "fields":  [
+          {
+            "name":  "delete_target_file_size_mb",
+            "label":  "Delete Target File Size (MB)",
+            "description":  "Target size for rewritten position-delete files.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "delete_min_input_files",
+            "label":  "Delete Min Input Files",
+            "description":  "Minimum number of position-delete files in a group before rewrite is triggered.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "2"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "delete_max_file_group_size_mb",
+            "label":  "Delete Max Group Size (MB)",
+            "description":  "Skip rewriting delete groups larger than this bound.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "delete_max_output_files",
+            "label":  "Delete Max Output Files",
+            "description":  "Maximum number of rewritten delete files a single group may produce.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "orphans",
+        "title":  "Orphan Removal",
+        "description":  "Controls for orphan file cleanup.",
+        "fields":  [
+          {
+            "name":  "orphan_older_than_hours",
+            "label":  "Safety Window (hours)",
+            "description":  "Only remove orphan files older than this many hours.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "manifests",
+        "title":  "Manifest Rewriting",
+        "description":  "Controls for merging small manifests.",
+        "fields":  [
+          {
+            "name":  "min_manifests_to_rewrite",
+            "label":  "Min Manifests",
+            "description":  "Minimum number of manifests before rewriting is triggered.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "2"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      },
+      {
+        "sectionId":  "general",
+        "title":  "General",
+        "description":  "General maintenance settings.",
+        "fields":  [
+          {
+            "name":  "max_commit_retries",
+            "label":  "Max Commit Retries",
+            "description":  "Maximum number of commit retries on version conflict.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "1"
+            },
+            "maxValue":  {
+              "int64Value":  "20"
+            },
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "operations",
+            "label":  "Operations",
+            "description":  "Comma-separated list of operations to run: compact, rewrite_position_delete_files, expire_snapshots, remove_orphans, rewrite_manifests, or 'all'.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "table_properties_override",
+            "label":  "Table Properties Win",
+            "description":  "Let a table's own Iceberg properties override these settings and its maintenance configuration. Clear to make the maintenance configuration authoritative.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_BOOL",
+            "widget":  "CONFIG_WIDGET_TOGGLE",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "where",
+            "label":  "Where Filter",
+            "description":  "Optional partition filter for compact, rewrite_position_delete_files, and rewrite_manifests. Supports field = literal, field IN (...), and AND.",
+            "helpText":  "",
+            "placeholder":  "region = 'us' AND dt IN ('2026-03-15')",
+            "fieldType":  "CONFIG_FIELD_TYPE_STRING",
+            "widget":  "CONFIG_WIDGET_TEXT",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  null,
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "apply_deletes":  {
+        "boolValue":  true
+      },
+      "delete_max_file_group_size_mb":  {
+        "int64Value":  "256"
+      },
+      "delete_max_output_files":  {
+        "int64Value":  "8"
+      },
+      "delete_min_input_files":  {
+        "int64Value":  "2"
+      },
+      "delete_target_file_size_mb":  {
+        "int64Value":  "64"
+      },
+      "max_commit_retries":  {
+        "int64Value":  "5"
+      },
+      "max_snapshots_to_keep":  {
+        "int64Value":  "5"
+      },
+      "min_input_files":  {
+        "int64Value":  "5"
+      },
+      "min_manifests_to_rewrite":  {
+        "int64Value":  "5"
+      },
+      "operations":  {
+        "stringValue":  "all"
+      },
+      "orphan_older_than_hours":  {
+        "int64Value":  "72"
+      },
+      "rewrite_strategy":  {
+        "stringValue":  "binpack"
+      },
+      "snapshot_retention_hours":  {
+        "int64Value":  "168"
+      },
+      "sort_buffer_rows":  {
+        "int64Value":  "262144"
+      },
+      "sort_max_input_mb":  {
+        "int64Value":  "0"
+      },
+      "sort_spill_dir":  {
+        "stringValue":  ""
+      },
+      "table_properties_override":  {
+        "boolValue":  true
+      },
+      "target_file_size_mb":  {
+        "int64Value":  "256"
+      },
+      "where":  {
+        "stringValue":  ""
+      }
+    }
+  },
+  "adminRuntimeDefaults":  {
+    "enabled":  false,
+    "detectionIntervalMinutes":  60,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  100,
+    "globalExecutionConcurrency":  4,
+    "perWorkerExecutionConcurrency":  2,
+    "retryLimit":  1,
+    "retryBackoffSeconds":  60,
+    "jobTypeMaxRuntimeSeconds":  3600,
+    "executionTimeoutSeconds":  3600
+  },
+  "workerDefaultValues":  {
+    "apply_deletes":  {
+      "boolValue":  true
+    },
+    "delete_max_file_group_size_mb":  {
+      "int64Value":  "256"
+    },
+    "delete_max_output_files":  {
+      "int64Value":  "8"
+    },
+    "delete_min_input_files":  {
+      "int64Value":  "2"
+    },
+    "delete_target_file_size_mb":  {
+      "int64Value":  "64"
+    },
+    "max_commit_retries":  {
+      "int64Value":  "5"
+    },
+    "max_snapshots_to_keep":  {
+      "int64Value":  "5"
+    },
+    "min_input_files":  {
+      "int64Value":  "5"
+    },
+    "operations":  {
+      "stringValue":  "all"
+    },
+    "orphan_older_than_hours":  {
+      "int64Value":  "72"
+    },
+    "rewrite_strategy":  {
+      "stringValue":  "binpack"
+    },
+    "snapshot_retention_hours":  {
+      "int64Value":  "168"
+    },
+    "sort_buffer_rows":  {
+      "int64Value":  "262144"
+    },
+    "sort_max_input_mb":  {
+      "int64Value":  "0"
+    },
+    "sort_spill_dir":  {
+      "stringValue":  ""
+    },
+    "table_properties_override":  {
+      "boolValue":  true
+    },
+    "target_file_size_mb":  {
+      "int64Value":  "256"
+    },
+    "where":  {
+      "stringValue":  ""
+    }
+  }
+}

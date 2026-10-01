@@ -1,0 +1,49 @@
+{
+  "job_id": "vacuum-scheduled-1790821533593721700-0",
+  "job_type": "vacuum",
+  "request_id": "exec-1790821535594044900-27c0ddb4724c6ea7",
+  "worker_id": "w-DESKTO-4026",
+  "dedupe_key": "vacuum:2:curso-bigdata",
+  "summary": "Vacuum volume 2 on 192.168.1.252:9340",
+  "detail": "Volume has excessive garbage requiring vacuum",
+  "parameters": {
+    "collection": {
+      "string_value": "curso-bigdata"
+    },
+    "estimated_runtime_seconds": {
+      "int64_value": "300"
+    },
+    "server": {
+      "string_value": "192.168.1.252:9340"
+    },
+    "task_params_pb": {
+      "bytes_value": "Chd2YWN1dW1fdm9sXzJfMTc5MDgyMTUzMxACGg1jdXJzby1iaWdkYXRhMIiGlAI6QQoYMTkyLjE2OC4xLjI1Mjo5MzQwLjE5MzQwGgtEZWZhdWx0UmFjayIRRGVmYXVsdERhdGFDZW50ZXIoAjiIhpQCSg4JMzMzMzMz0z8Y6AcoAQ=="
+    },
+    "volume_id": {
+      "int64_value": "2"
+    }
+  },
+  "labels": {
+    "collection": "curso-bigdata",
+    "source_node": "192.168.1.252:9340",
+    "task_type": "vacuum",
+    "volume_id": "2"
+  },
+  "state": "job_state_succeeded",
+  "progress": 100,
+  "stage": "completed",
+  "message": "vacuum completed for volume 2",
+  "attempt": 1,
+  "created_at": "2026-10-01T02:25:33.5937217Z",
+  "updated_at": "2026-10-01T02:25:35.5940449Z",
+  "completed_at": "2026-10-01T02:25:35.6129386Z",
+  "result_summary": "vacuum completed for volume 2",
+  "result_output_values": {
+    "server": {
+      "string_value": "192.168.1.252:9340.19340"
+    },
+    "volume_id": {
+      "int64_value": "2"
+    }
+  }
+}

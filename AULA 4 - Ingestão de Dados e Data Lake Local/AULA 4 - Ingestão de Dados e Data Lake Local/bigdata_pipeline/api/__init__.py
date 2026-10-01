@@ -1,0 +1,1 @@
+"""API local de fontes de dados."""

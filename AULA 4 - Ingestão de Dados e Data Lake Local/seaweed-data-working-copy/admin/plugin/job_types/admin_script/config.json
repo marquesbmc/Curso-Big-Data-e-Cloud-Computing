@@ -1,0 +1,27 @@
+{
+  "jobType":  "admin_script",
+  "descriptorVersion":  1,
+  "adminConfigValues":  {
+    "run_interval_minutes":  {
+      "int64Value":  "17"
+    },
+    "script":  {
+      "stringValue":  "fs.log.purge -daysAgo=7\nvolume.deleteEmpty -quietFor=24h -apply\nvolume.fix.replication -apply\ns3.clean.uploads -timeAgo=24h"
+    }
+  },
+  "workerConfigValues":  {},
+  "adminRuntime":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  17,
+    "detectionTimeoutSeconds":  300,
+    "maxJobsPerDetection":  1,
+    "globalExecutionConcurrency":  1,
+    "perWorkerExecutionConcurrency":  1,
+    "retryLimit":  0,
+    "retryBackoffSeconds":  30,
+    "jobTypeMaxRuntimeSeconds":  1800,
+    "executionTimeoutSeconds":  1800
+  },
+  "updatedAt":  "2026-09-30T21:23:26.532567400Z",
+  "updatedBy":  "plugin"
+}

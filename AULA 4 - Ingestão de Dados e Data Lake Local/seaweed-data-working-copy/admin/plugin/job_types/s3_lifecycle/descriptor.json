@@ -1,0 +1,129 @@
+{
+  "jobType":  "s3_lifecycle",
+  "displayName":  "S3 Lifecycle",
+  "description":  "Daily S3 object expiration scan with per-shard cursors and bounded retry.",
+  "icon":  "fas fa-recycle",
+  "descriptorVersion":  1,
+  "adminConfigForm":  {
+    "formId":  "s3-lifecycle-admin",
+    "title":  "S3 Lifecycle",
+    "description":  "Cluster-wide delete-throughput cap.",
+    "sections":  [
+      {
+        "sectionId":  "scope",
+        "title":  "Scope",
+        "description":  "Cluster-wide delete-throughput cap.",
+        "fields":  [
+          {
+            "name":  "cluster_deletes_per_second",
+            "label":  "Cluster Delete Rate (per second)",
+            "description":  "Cluster-wide ceiling on lifecycle delete RPCs per second, divided evenly across active s3_lifecycle workers at job-dispatch time. 0 = unlimited.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "cluster_deletes_burst",
+            "label":  "Cluster Delete Burst",
+            "description":  "Token-bucket burst capacity across the cluster (max simultaneous deletes). 0 = 2 × rate. Same allocation rule as the rate.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "meta_log_retention_days",
+            "label":  "Meta-Log Retention (days)",
+            "description":  "How far back the filer's meta-log subscription can reach. Rules whose TTL exceeds this run via the walker; shrinking this value will trigger a one-time recovery walk on the next run for any rule that's now too old to replay. 0 = unbounded (no partition; every rule serviced by replay).",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          },
+          {
+            "name":  "walker_interval_minutes",
+            "label":  "Walker Interval (minutes)",
+            "description":  "Minimum time between steady-state walker fires per shard. Cold-start and rule-change recovery walks ignore this — they run unconditionally. 0 = fire on every run (use when the worker is scheduled at the desired walk cadence, e.g. hourly). Set to a positive value when the worker runs at a tighter cadence than the desired walk frequency, to avoid hammering filer with a full subtree scan per run.",
+            "helpText":  "",
+            "placeholder":  "",
+            "fieldType":  "CONFIG_FIELD_TYPE_INT64",
+            "widget":  "CONFIG_WIDGET_NUMBER",
+            "required":  false,
+            "readOnly":  false,
+            "sensitive":  false,
+            "minValue":  {
+              "int64Value":  "0"
+            },
+            "maxValue":  null,
+            "options":  [],
+            "validationRules":  [],
+            "visibleWhenField":  "",
+            "visibleWhenEquals":  null
+          }
+        ]
+      }
+    ],
+    "defaultValues":  {
+      "cluster_deletes_burst":  {
+        "int64Value":  "0"
+      },
+      "cluster_deletes_per_second":  {
+        "int64Value":  "0"
+      },
+      "meta_log_retention_days":  {
+        "int64Value":  "0"
+      },
+      "walker_interval_minutes":  {
+        "int64Value":  "0"
+      }
+    }
+  },
+  "workerConfigForm":  null,
+  "adminRuntimeDefaults":  {
+    "enabled":  true,
+    "detectionIntervalMinutes":  1440,
+    "detectionTimeoutSeconds":  60,
+    "maxJobsPerDetection":  1,
+    "globalExecutionConcurrency":  0,
+    "perWorkerExecutionConcurrency":  0,
+    "retryLimit":  0,
+    "retryBackoffSeconds":  0,
+    "jobTypeMaxRuntimeSeconds":  2147483647,
+    "executionTimeoutSeconds":  2147483647
+  },
+  "workerDefaultValues":  {}
+}
