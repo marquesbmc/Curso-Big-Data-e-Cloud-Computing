@@ -1,0 +1,94 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "1. Preparar dados demo (instrutor)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/../PREPARAÇÃO - Geradores da Aula 4/generate.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--profile", "demo",
+        "--output", "${workspaceFolder}/data/source",
+        "--reset", "--reset-lake"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "2. Iniciar API local",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.api.app",
+      "console": "integratedTerminal",
+      "env": {
+        "BIGDATA_SOURCE_DIR": "${workspaceFolder}/data/source"
+      }
+    },
+    {
+      "name": "EL 01 - SQLite",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.el.sqlite",
+      "console": "integratedTerminal",
+      "args": ["--source", "${workspaceFolder}/data/source", "--lake", "${workspaceFolder}/data/lake"]
+    },
+    {
+      "name": "EL 02 - CSV",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.el.csv",
+      "console": "integratedTerminal",
+      "args": ["--source", "${workspaceFolder}/data/source", "--lake", "${workspaceFolder}/data/lake"]
+    },
+    {
+      "name": "EL 03 - JSON",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.el.json",
+      "console": "integratedTerminal",
+      "args": ["--source", "${workspaceFolder}/data/source", "--lake", "${workspaceFolder}/data/lake"]
+    },
+    {
+      "name": "EL 04 - Eventos",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.el.events",
+      "console": "integratedTerminal",
+      "args": ["--source", "${workspaceFolder}/data/source", "--lake", "${workspaceFolder}/data/lake"]
+    },
+    {
+      "name": "EL 05 - API de entregas",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.el.api",
+      "console": "integratedTerminal",
+      "args": ["--source", "${workspaceFolder}/data/source", "--lake", "${workspaceFolder}/data/lake", "--api-url", "http://127.0.0.1:8001"]
+    },
+    {
+      "name": "4. Preparar lote incremental (instrutor)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/../PREPARAÇÃO - Geradores da Aula 4/simulate_live.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--source", "${workspaceFolder}/data/source",
+        "--batches", "5", "--orders-per-batch", "20", "--interval", "2"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "5. Inspecionar volumes",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "bigdata_pipeline.inspect",
+      "console": "integratedTerminal",
+      "args": ["--data", "${workspaceFolder}/data"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "API + inspeção",
+      "configurations": ["2. Iniciar API local", "5. Inspecionar volumes"]
+    }
+  ]
+}
