@@ -1,4 +1,6 @@
 fastapi>=0.115,<1
 uvicorn[standard]>=0.34,<1
 boto3>=1.35,<2
+duckdb>=1.4,<2
+pytz>=2024.1
 

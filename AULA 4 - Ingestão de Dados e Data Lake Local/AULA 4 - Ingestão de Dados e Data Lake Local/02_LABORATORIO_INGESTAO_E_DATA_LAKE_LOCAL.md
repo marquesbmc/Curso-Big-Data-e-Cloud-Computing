@@ -20,11 +20,19 @@ As explicações conceituais e o código comentado estão em `01_CONTEUDO_TECNIC
 
 ## 1. Abrir o projeto
 
-Abra no VS Code:
+Considere esta estrutura:
 
 ```text
-D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local
+Curso-Big-Data-e-Cloud-Computing/                         ← raiz do repositório
+├── .venv/                                                ← ambiente virtual
+└── AULA 4 - Ingestão de Dados e Data Lake Local/
+    └── AULA 4 - Ingestão de Dados e Data Lake Local/     ← código do laboratório
+        ├── bigdata_pipeline/
+        ├── data/
+        └── requirements.txt
 ```
+
+Abra o terminal na **raiz do repositório**, onde ficará a pasta `.venv`.
 
 No terminal integrado, confirme a pasta:
 
@@ -32,26 +40,83 @@ No terminal integrado, confirme a pasta:
 Get-Location
 ```
 
-Se necessário, entre nela:
+### Preparar e invocar o Python
+
+Primeiro, confirme que o Python Launcher está disponível:
 
 ```powershell
-Set-Location 'D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local'
+py --version
 ```
 
-Confirme que o Python e as fontes existem:
+O resultado deve mostrar uma versão do Python, por exemplo:
+
+```text
+Python 3.13.11
+```
+
+Se `py` não for reconhecido, instale o Python 3.13 e habilite o **Python Launcher** durante a instalação.
+
+Na raiz do repositório, crie o ambiente virtual:
 
 ```powershell
-Test-Path ..\.venv\Scripts\python.exe
+py -m venv .venv
+```
+
+Ative o ambiente:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Depois da ativação, o prompt deverá começar com `(.venv)`:
+
+```text
+(.venv) PS D:\dev\Curso-Big-Data-e-Cloud-Computing>
+```
+
+Agora entre na **pasta interna** que contém `bigdata_pipeline`:
+
+```powershell
+Set-Location '.\AULA 4 - Ingestão de Dados e Data Lake Local\AULA 4 - Ingestão de Dados e Data Lake Local'
+```
+
+Confirme a pasta e o Python:
+
+```powershell
+Test-Path .\bigdata_pipeline
 Test-Path .\data\source
+python --version
 ```
 
-Os dois resultados devem ser `True`.
+Os dois comandos `Test-Path` devem retornar `True`. Como o `.venv` está ativado, `python` invoca automaticamente:
 
-### Instalação offline, somente se necessária
+```text
+D:\dev\Curso-Big-Data-e-Cloud-Computing\.venv\Scripts\python.exe
+```
+
+> Se o terminal estiver na raiz do repositório, o Python existe, mas o módulo `bigdata_pipeline` não será encontrado. Entre primeiro na pasta interna mostrada acima.
+
+### Instalar as dependências
+
+Com internet, execute:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m pip install --no-index --find-links ..\wheelhouse -r .\requirements.txt
+python -m pip install -r .\requirements.txt
 ```
+
+Sem internet, execute:
+
+```powershell
+python -m pip install --no-index --find-links ..\wheelhouse -r .\requirements.txt
+```
+
+Depois disso, todos os comandos do laboratório devem começar com:
+
+```powershell
+python -m
+```
+
+Mantenha o `(.venv)` visível no início do prompt durante o laboratório.
 
 ---
 
@@ -60,8 +125,7 @@ Os dois resultados devem ser `True`.
 Abra um terminal exclusivo para a API e deixe-o aberto:
 
 ```powershell
-Set-Location 'D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local'
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.api.app
+python -m bigdata_pipeline.api.app
 ```
 
 Teste no navegador:
@@ -84,7 +148,7 @@ Nesta fase, cada comando lê uma fonte e grava somente na Landing local. Não ex
 ### 3.1 SQLite
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.el.sqlite --source .\data\source --lake .\data\lake
+python -m bigdata_pipeline.el.sqlite --source .\data\source --lake .\data\lake
 ```
 
 Resultado da primeira captura:
@@ -152,7 +216,7 @@ Destino: `data/lake/landing/sqlite/`.
 ### 3.2 CSV
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.el.csv --source .\data\source --lake .\data\lake
+python -m bigdata_pipeline.el.csv --source .\data\source --lake .\data\lake
 ```
 
 Resultado da primeira captura:
@@ -219,7 +283,7 @@ Destino: `data/lake/landing/csv/`.
 ### 3.3 JSON
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.el.json --source .\data\source --lake .\data\lake
+python -m bigdata_pipeline.el.json --source .\data\source --lake .\data\lake
 ```
 
 Resultado da primeira captura:
@@ -289,7 +353,7 @@ Destino: `data/lake/landing/json/`.
 ### 3.4 Eventos
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.el.events --source .\data\source --lake .\data\lake
+python -m bigdata_pipeline.el.events --source .\data\source --lake .\data\lake
 ```
 
 Resultado da primeira captura:
@@ -375,7 +439,7 @@ Destino: `data/lake/landing/events/`.
 A API iniciada no item 2 precisa continuar rodando.
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.el.api --source .\data\source --lake .\data\lake --api-url http://127.0.0.1:8001
+python -m bigdata_pipeline.el.api --source .\data\source --lake .\data\lake --api-url http://127.0.0.1:8001
 ```
 
 Resultado da primeira captura:
@@ -497,7 +561,7 @@ Get-ChildItem .\data\lake\landing -Recurse -File | Select-Object FullName, Lengt
 Confira o resumo local:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.inspect --data .\data
+python -m bigdata_pipeline.inspect --data .\data
 ```
 
 O objetivo desta conferência é simples:
@@ -514,17 +578,47 @@ Não sincronize ainda. A atualização do SeaweedFS será feita separadamente na
 
 ## 4. Iniciar e conhecer o SeaweedFS
 
-Abra um terminal exclusivo para o SeaweedFS e deixe-o aberto:
+Abra um terminal exclusivo para o SeaweedFS e deixe-o aberto. Neste terminal,
+volte para a raiz do repositório, de forma que o prompt termine assim:
+
+```text
+PS D:\dev\Curso-Big-Data-e-Cloud-Computing>
+```
+
+Defina os caminhos a partir da raiz. O bloco também extrai o executável caso
+somente o arquivo ZIP tenha sido distribuído:
 
 ```powershell
-Set-Location 'D:\dev\BIGDATA\AULA 4 - Ingestão de Dados e Data Lake Local'
-$env:AWS_ACCESS_KEY_ID = "admin"
-$env:AWS_SECRET_ACCESS_KEY = "bigdata-secret"
+$aula4 = Join-Path (Get-Location).Path 'AULA 4 - Ingestão de Dados e Data Lake Local'
+$seaweedExe = Join-Path $aula4 'tools\seaweedfs\weed.exe'
+$seaweedZip = Join-Path $aula4 'work\seaweedfs-download\windows_amd64.zip'
+$seaweedData = Join-Path $aula4 'seaweed-data-working-copy'
+
+if (-not (Test-Path $seaweedExe)) {
+    New-Item -ItemType Directory -Force (Split-Path $seaweedExe) | Out-Null
+    Expand-Archive -LiteralPath $seaweedZip -DestinationPath (Split-Path $seaweedExe) -Force
+}
+
+New-Item -ItemType Directory -Force $seaweedData | Out-Null
+
+Test-Path $seaweedExe
+Test-Path $seaweedData
+```
+
+Os dois testes devem retornar `True`. Depois, configure o ambiente e inicie o
+SeaweedFS:
+
+```powershell
+$env:debug = 'false'
+$env:AWS_ACCESS_KEY_ID = 'admin'
+$env:AWS_SECRET_ACCESS_KEY = 'bigdata-secret'
 $env:S3_BUCKET = "curso-bigdata"
 $env:S3_ENDPOINT_URL = "http://127.0.0.1:8333"
-$seaweedData = (Resolve-Path ..\seaweed-data-working-copy).Path
-& ..\tools\seaweedfs\weed.exe mini -dir $seaweedData
+
+& $seaweedExe mini "-dir=$seaweedData" "-bucket=curso-bigdata"
 ```
+
+> Não use `Resolve-Path` antes de criar `seaweed-data-working-copy`: esse comando apenas localiza caminhos que já existem.
 
 O modo `mini` inicia, em uma única máquina, os componentes necessários ao laboratório.
 
@@ -574,7 +668,54 @@ Os dados físicos do SeaweedFS ficam em `..\seaweed-data-working-copy`. Essa pas
 
 ## 5. Testar o acesso ao Data Lake
 
-No terminal usado para os comandos do laboratório, defina as mesmas configurações:
+Mantenha o terminal do SeaweedFS aberto. Abra um **segundo terminal** para os
+comandos Python.
+
+Se o segundo terminal estiver na raiz do repositório e já mostrar `(.venv)`,
+entre na pasta interna da Aula 4:
+
+```powershell
+Set-Location '.\AULA 4 - Ingestão de Dados e Data Lake Local\AULA 4 - Ingestão de Dados e Data Lake Local'
+```
+
+O prompt deverá terminar assim:
+
+```text
+...\AULA 4 - Ingestão de Dados e Data Lake Local\AULA 4 - Ingestão de Dados e Data Lake Local>
+```
+
+Confirme que o módulo está visível:
+
+```powershell
+Test-Path .\bigdata_pipeline
+```
+
+O resultado precisa ser `True`. Se aparecer `False`, não execute ainda o
+`python -m`: você está na pasta errada.
+
+Confirme também que o `boto3` está instalado dentro do `.venv` ativo:
+
+```powershell
+python -c "import boto3; print('boto3:', boto3.__version__)"
+```
+
+Se aparecer `ModuleNotFoundError: No module named 'boto3'`, instale as
+dependências do projeto:
+
+```powershell
+python -m pip install -r .\requirements.txt
+```
+
+Sem acesso à internet, instale o `boto3` pelo `wheelhouse`:
+
+```powershell
+python -m pip install --no-index --find-links ..\wheelhouse "boto3>=1.35,<2"
+```
+
+Repita o teste de importação antes de continuar. A versão instalada deverá ser
+exibida sem erros.
+
+Nesse segundo terminal, defina as mesmas configurações:
 
 ```powershell
 $env:AWS_ACCESS_KEY_ID = "admin"
@@ -583,10 +724,12 @@ $env:S3_BUCKET = "curso-bigdata"
 $env:S3_ENDPOINT_URL = "http://127.0.0.1:8333"
 ```
 
+> As variáveis configuradas no terminal do SeaweedFS não são copiadas automaticamente para outro terminal.
+
 Teste a conexão:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.sync --check
+python -m bigdata_pipeline.lake.sync --check
 ```
 
 Resultado esperado:
@@ -602,7 +745,7 @@ Resultado esperado:
 Inspecione o bucket antes da sincronização:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.sync --inspect
+python -m bigdata_pipeline.lake.sync --inspect
 ```
 
 ---
@@ -612,7 +755,7 @@ Inspecione o bucket antes da sincronização:
 Execute o `sync.py` uma única vez:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.sync --source .\data\lake\landing
+python -m bigdata_pipeline.lake.sync --source .\data\lake\landing
 ```
 
 Resultado da primeira sincronização:
@@ -690,7 +833,7 @@ Não execute `sync.py` depois de cada EL. Os cinco ELs já montaram a Landing co
 Inspecione o bucket:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.sync --inspect
+python -m bigdata_pipeline.lake.sync --inspect
 ```
 
 Abra o Filer:
@@ -722,7 +865,7 @@ O resumo do terminal informa:
 Execute novamente:
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.sync --source .\data\lake\landing
+python -m bigdata_pipeline.lake.sync --source .\data\lake\landing
 ```
 
 Resultado esperado:
@@ -774,7 +917,7 @@ Use estes comandos somente quando realmente quiser descartar o resultado atual.
 > Remove `data\lake` sem backup. As fontes e o bucket permanecem.
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.reset --data .\data --no-backup
+python -m bigdata_pipeline.lake.reset --data .\data --no-backup
 ```
 
 Confirmação:
@@ -788,7 +931,7 @@ APAGAR LAKE LOCAL
 > Ação permanente. O SeaweedFS precisa estar rodando.
 
 ```powershell
-& ..\.venv\Scripts\python.exe -m bigdata_pipeline.lake.reset --data .\data --clear-seaweedfs --no-backup
+python -m bigdata_pipeline.lake.reset --data .\data --clear-seaweedfs --no-backup
 ```
 
 Confirmação:

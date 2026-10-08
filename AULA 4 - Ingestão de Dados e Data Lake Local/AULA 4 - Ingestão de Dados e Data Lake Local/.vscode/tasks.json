@@ -226,6 +226,7 @@
       "options": {
         "cwd": "${workspaceFolder}",
         "env": {
+          "debug": "false",
           "AWS_ACCESS_KEY_ID": "admin",
           "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
           "S3_BUCKET": "curso-bigdata",
@@ -335,6 +336,116 @@
       ],
       "options": {
         "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "80. Verificar pré-requisitos da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--check"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "81. Construir Bronze",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "bronze"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "82. Inspecionar Bronze de eventos",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.inspect", "--layer", "bronze", "--dataset", "events", "--limit", "5"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "83. Construir Silver e Quarentena",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "silver"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "84. Inspecionar quarentena de eventos",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.inspect", "--layer", "quarantine", "--dataset", "events", "--limit", "20"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "85. Exibir relatório de qualidade",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.quality_report"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "86. Construir Gold no DuckDB",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "gold"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "87. Consultar receita por categoria",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.query", "--name", "receita-categoria"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "88. Validar pipeline da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.validate", "--all"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "89. Executar Aula 5 completa",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "81. Construir Bronze",
+        "83. Construir Silver e Quarentena",
+        "86. Construir Gold no DuckDB",
+        "88. Validar pipeline da Aula 5",
+        "91. Publicar camadas no SeaweedFS"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "90. Zerar camadas da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--reset"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "91. Publicar camadas no SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\..\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.publish"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "debug": "false",
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
       },
       "problemMatcher": []
     }
