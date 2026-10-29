@@ -19,6 +19,7 @@ class CaptureRun:
     run_id: str = ""
     landing: Path | None = None
     state: dict | None = None
+    topic: str = ""
 
     def __post_init__(self) -> None:
         self.started_at = datetime.now(timezone.utc)
@@ -40,7 +41,11 @@ class CaptureRun:
         self.state["last_run"] = summary["finished_at"]
         control = self.lake / "control"
         write_json(control / "capture_state.json", self.state)
-        write_json(control / f"run_{self.run_id}.json", summary)
+        # O sufixo com o tópico evita que ELs executados no mesmo segundo
+        # (situação comum quando um orquestrador os dispara em sequência)
+        # sobrescrevam o registro de execução uns dos outros.
+        suffix = f"_{self.topic}" if self.topic else ""
+        write_json(control / f"run_{self.run_id}{suffix}.json", summary)
         print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 
@@ -88,5 +93,5 @@ def run_single_capture(
     if api_url_required:
         parser.add_argument("--api-url", default="http://127.0.0.1:8001")
     args = parser.parse_args()
-    run = CaptureRun(args.source, args.lake, getattr(args, "api_url", None))
-    run.finish({topic: handler(run)})
+    run = CaptureRun(args.source, args.lake, getattr(args, "api_url", None), topic=topic)
+    run.finish({topic: handler(run)})

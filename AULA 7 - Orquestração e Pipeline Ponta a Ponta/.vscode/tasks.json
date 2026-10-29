@@ -1,0 +1,636 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "00. Criar ambiente virtual",
+      "type": "process",
+      "command": "py",
+      "args": ["-m", "venv", "${workspaceFolder}\\.venv"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "01. Instalar dependências (com internet)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "pip", "install", "-r", "${workspaceFolder}\\requirements.txt"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "02. Preparar projeto completo",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "00. Criar ambiente virtual",
+        "03. Instalar dependências offline"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "03. Instalar dependências offline",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m", "pip", "install",
+        "--no-index",
+        "--find-links", "${workspaceFolder}\\wheelhouse",
+        "-r", "${workspaceFolder}\\requirements.txt"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "04. Preparar wheelhouse (requer internet)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m", "pip", "download",
+        "--only-binary=:all:",
+        "-r", "${workspaceFolder}\\requirements.txt",
+        "--dest", "${workspaceFolder}\\wheelhouse"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": "00. Criar ambiente virtual",
+      "problemMatcher": []
+    },
+    {
+      "label": "05. Preparar Aula 7 (ambiente + dados)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "00. Criar ambiente virtual",
+        "03. Instalar dependências offline",
+        "10. Preparar dados DEMO (instrutor)"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "10. Preparar dados DEMO (instrutor)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\geradores\\generate.py",
+        "--profile", "demo",
+        "--error-rate", "0.02",
+        "--output", "${workspaceFolder}\\data\\source",
+        "--reset",
+        "--reset-lake"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "11. Preparar dados com parâmetros (instrutor)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\geradores\\generate.py",
+        "--profile", "${input:dataProfile}",
+        "--error-rate", "${input:errorRate}",
+        "--output", "${workspaceFolder}\\data\\source",
+        "--reset",
+        "--reset-lake"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "12. Instalar e preparar DEMO (instrutor)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "02. Preparar projeto completo",
+        "10. Preparar dados DEMO (instrutor)"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "20. Iniciar API local",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.api.app"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "BIGDATA_SOURCE_DIR": "${workspaceFolder}\\data\\source"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "EL 01 - SQLite",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.el.sqlite", "--source", "${workspaceFolder}\\data\\source", "--lake", "${workspaceFolder}\\data\\lake"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "EL 02 - CSV",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.el.csv", "--source", "${workspaceFolder}\\data\\source", "--lake", "${workspaceFolder}\\data\\lake"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "EL 03 - JSON",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.el.json", "--source", "${workspaceFolder}\\data\\source", "--lake", "${workspaceFolder}\\data\\lake"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "EL 04 - Eventos",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.el.events", "--source", "${workspaceFolder}\\data\\source", "--lake", "${workspaceFolder}\\data\\lake"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "EL 05 - API de entregas",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.el.api", "--source", "${workspaceFolder}\\data\\source", "--lake", "${workspaceFolder}\\data\\lake", "--api-url", "http://127.0.0.1:8001"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "30. Preparar lote incremental",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\geradores\\simulate_live.py",
+        "--source", "${workspaceFolder}\\data\\source",
+        "--batches", "5",
+        "--orders-per-batch", "20",
+        "--events-per-order", "8",
+        "--interval", "2"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "31. Preparar lotes continuamente",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\geradores\\simulate_live.py",
+        "--source", "${workspaceFolder}\\data\\source",
+        "--forever",
+        "--orders-per-batch", "20",
+        "--events-per-order", "8",
+        "--interval", "2"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "40. Inspecionar volumes",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.inspect", "--data", "${workspaceFolder}\\data"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "50. Iniciar SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\tools\\seaweedfs\\weed.exe",
+      "args": ["mini", "-dir", "${workspaceFolder}\\seaweed-data-working-copy"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "debug": "false",
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "51. Testar conexão SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.lake.sync", "--check"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "52. Sincronizar Landing com SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.lake.sync", "--source", "${workspaceFolder}\\data\\lake\\landing"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "53. Inspecionar bucket SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.lake.sync", "--inspect", "--source", "${workspaceFolder}\\data\\lake\\landing"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "60. Zerar Landing local (sem backup)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.lake.reset", "--data", "${workspaceFolder}\\data", "--no-backup"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      }
+    },
+    {
+      "label": "61. Zerar Lake local e bucket (sem backup)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.lake.reset", "--data", "${workspaceFolder}\\data", "--clear-seaweedfs", "--no-backup"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": true
+      }
+    },
+    {
+      "label": "70. Registrar meu nome no Lake",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m", "bigdata_pipeline.lake.register_student",
+        "--data", "${workspaceFolder}\\data",
+        "--name", "${input:studentDisplayName}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "80. Verificar pré-requisitos da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--check"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "81. Construir Bronze",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "bronze"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "82. Inspecionar Bronze de eventos",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.inspect", "--layer", "bronze", "--dataset", "events", "--limit", "5"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "83. Construir Silver e Quarentena",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "silver"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "84. Inspecionar quarentena de eventos",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.inspect", "--layer", "quarantine", "--dataset", "events", "--limit", "20"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "85. Exibir relatório de qualidade",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.quality_report"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "86. Construir Gold no DuckDB",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--stage", "gold"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "87. Consultar receita por categoria",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.query", "--name", "receita-categoria"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "88. Validar pipeline da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.validate", "--all"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "89. Executar Aula 5 completa",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "81. Construir Bronze",
+        "83. Construir Silver e Quarentena",
+        "86. Construir Gold no DuckDB",
+        "88. Validar pipeline da Aula 5",
+        "91. Publicar camadas no SeaweedFS"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "90. Zerar camadas da Aula 5",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.pipeline", "--reset"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "91. Publicar camadas no SeaweedFS",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.publish"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "debug": "false",
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "92. Ver DAG da plataforma",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner", "--graph"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "93. Executar DAG completo",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "94. Executar DAG com gate rigoroso (2%)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner", "--param", "max_quarantine_pct=2"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "95. Retomar última execução com falha",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner", "--resume", "last"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    },
+    {
+      "label": "96. Histórico de execuções do DAG",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner", "--history"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "97. Executar somente o gate de qualidade",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.transform.quality_gate"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "98. Treinar somente o modelo de risco de atraso",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.ml.risco_atraso"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "99. Agendar DAG a cada 2 minutos",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "bigdata_pipeline.orchestration.runner", "--every", "120"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_ACCESS_KEY_ID": "admin",
+          "AWS_SECRET_ACCESS_KEY": "bigdata-secret",
+          "S3_BUCKET": "curso-bigdata",
+          "S3_ENDPOINT_URL": "http://127.0.0.1:8333"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false,
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dataProfile",
+      "type": "pickString",
+      "description": "Escolha o volume de dados",
+      "options": ["demo", "medium", "large"],
+      "default": "demo"
+    },
+    {
+      "id": "errorRate",
+      "type": "promptString",
+      "description": "Taxa de erros entre 0 e 0.25",
+      "default": "0.02"
+    },
+    {
+      "id": "studentDisplayName",
+      "type": "promptString",
+      "description": "Nome para aparecer no Lake (use primeiro nome ou apelido)",
+      "default": ""
+    }
+  ]
+}

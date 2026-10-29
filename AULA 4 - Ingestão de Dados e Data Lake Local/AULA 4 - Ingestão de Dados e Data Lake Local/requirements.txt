@@ -3,4 +3,6 @@ uvicorn[standard]>=0.34,<1
 boto3>=1.35,<2
 duckdb>=1.4,<2
 pytz>=2024.1
-
+# Aula 6 — modelo de risco de atraso (última tarefa do DAG)
+scikit-learn>=1.5,<2
+pandas>=2.2,<3

@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+seaweed-data/
+seaweed-data-working-copy/
+

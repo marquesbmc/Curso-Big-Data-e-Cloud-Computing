@@ -1,0 +1,1 @@
+"""Implementação local do laboratório de Big Data."""
